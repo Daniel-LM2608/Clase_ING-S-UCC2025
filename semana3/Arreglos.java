@@ -17,5 +17,11 @@ public class Arreglos {
             System.out.println("a[" + i + "]=" + a[i]);
         }
 
+
+        //------------------------
+
+        int tam = 10;
+        int[] b = new int[tam];
+
     }
 }
