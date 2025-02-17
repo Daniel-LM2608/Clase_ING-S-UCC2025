@@ -8,7 +8,7 @@ public class Ejercicio2 {
         //Deducciones de cada empleado
         double[] C = { 20.0, 35.0, 10.0 };
 
-        //arreglo que almacena el neto a pagar de cada empleado ej A.length  3
+        //arreglo que almacena el neto a pagar de cada empleado ej A.length = 3
         double[] T = new double[A.length];
         //Asignacion de la formula  a cada posicion del arreglo T
         for(int i = 0; i < T.length; i++){
