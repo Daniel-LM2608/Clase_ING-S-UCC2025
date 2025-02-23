@@ -1,6 +1,6 @@
 public class Ejercicio3 {
     public static void main(String[] args) {
-        
+
         int tam = 10;
         int[] b = new int[tam];
 
