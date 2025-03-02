@@ -6,31 +6,30 @@ public class Ejercicio5 {
         Scanner leer = new Scanner(System.in);
         System.out.println("por favor digite la cantidad de viviendas: ");
         int n = leer.nextInt();
-        // int n = 5;
+
         int[] alquileres = new int[n];
-        // Estructura para llenar el arreglo, con numeros aleatoreos
-        // entre 10 y 30
+
         for (int i = 0; i < alquileres.length; i++) {
-            alquileres[i] = (int) (Math.random() * (100 + 1000)) + 1000;
+            alquileres[i] = (int) (Math.random() * (1000 + 100)) + 100;
         }
         int[] porcentaje = new int[n];
-        // Estructura para llenar el arreglo, con numeros aleatoreos
-        // entre 10 y 30
         for (int i = 0; i < porcentaje.length; i++) {
-            porcentaje[i] = (int) (Math.random() * (1 + 100)) + 100;
+            porcentaje[i] = (int) (Math.random() * (100 + 1)) + 1;
         }
-        int[] ganancia = new int[n];
+        int[] ganancia = new int[alquileres.length];
 
         for (int i = 0; i < ganancia.length; i++) {
             ganancia[i] = alquileres[i] * porcentaje[i] / 100;
         }
-        // mostrar los elementos del arreglo
-        for (int i = 0; i < ganancia.length; i++) {
-            System.out.println("ganancias[" + i + "]=" + ganancia[i]);
+
+        for (int i = 0; i < alquileres.length; i++) {
+            System.out.println("alquileres[" + i + "]=" + alquileres[i]);
         }
-
-        System.out.println("La ganancia de las " + n + " viviendas son :" + ganancia);
-
-        leer.close();
+        for (int i = 0; i < porcentaje.length; i++) {
+            System.out.println("porcentajes[" + i + "]=" + porcentaje[i]);
+        }
+        for (int i = 0; i < ganancia.length; i++) {
+            System.out.println("ganacia de la vivienda[" + i + "]=" + ganancia[i]);
+        }
     }
 }
