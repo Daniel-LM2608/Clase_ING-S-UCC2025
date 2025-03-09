@@ -39,6 +39,7 @@ public class ActividadEvaluativa {
                     System.out.print("Ingrese la placa");
                     placas[puesto] = scanner.nextLine();// para guardar la placa de la moto
                     ocupado[puesto] = true;
+                    tiempoEntrada[puesto] = LocalTime.now();//guardar la hora 
                     System.out.println("Moto registrada en el puesto " + puesto + " a las " + tiempoEntrada[puesto]);
                 } else {
                     System.out.println("El puesto esta ocupado, eliga otro puesto.");
@@ -54,7 +55,7 @@ public class ActividadEvaluativa {
         System.out.println("cobro de parqueadero:");
 
         for (int i = 0; i < ocupado.length; i++){
-            if (ocupado[i]) { //para cobrar solo si el puesto esta ocupado
+            if (ocupado[i] && tiempoEntrada[i] != null) { //para cobrar solo si hay un tiempo regristado 
                 LocalTime tiempoSalida = LocalTime.now(); //sirve para guardar la hora de salida 
                 long tiempoTotal = Duration.between(tiempoEntrada[i], tiempoSalida).toMinutes();//calcular los minutos 
 
@@ -65,7 +66,7 @@ public class ActividadEvaluativa {
                     costo = 2000;
                 }
 
-                System.out.println("Puesto " + i + " - tiempo: " + tiempoTotal + "minutos - total: $"+ costo);
+                System.out.println("Puesto " + i + " - Placa: " + placas[i] + " - Tiempo: " + tiempoTotal + "minutos - total: $"+ costo);
                 
                 ocupado[i] = false; //poner el puesto disponible 
                 placas[i] = null;
