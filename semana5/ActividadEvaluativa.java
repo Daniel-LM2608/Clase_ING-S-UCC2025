@@ -1,3 +1,5 @@
+import java.time.Duration;
+import java.time.LocalTime;
 import java.util.Scanner;
 
 public class ActividadEvaluativa {
@@ -7,7 +9,9 @@ public class ActividadEvaluativa {
         int tam = 21;
         boolean[] ocupado = new boolean[tam]; // para saber si esta libre false o ocupado true
         String[] placas = new String[tam]; // para guardas las placas moto en los puestos
+        LocalTime[] tiempoEntrada = new LocalTime[tam]; //para guardar la hora en el puesto 
         Scanner scanner = new Scanner(System.in);
+        
 
 
         while (true) { // me sirve para hacer un bucle para poder regristrar motos y tambien para salir
@@ -45,5 +49,26 @@ public class ActividadEvaluativa {
             }
         }   
 
+    }
+    public static void main(String[] args) {
+        System.out.println("cobro de parqueadero:");
+        for (int i = 0; i < ocupado.legth; i++){
+            if (ocupado[i] { //para cobrar solo si el puesto esta ocupado
+                LocalTime tiempoSalida = LocalTime.now(); //sirve para guardar la hora de salida 
+                long tiempoTotal = Duration.between(tiempoEntrada[i], tiempoSalida).toMinutes();//calcular los minutos 
+
+                int costo = 0;
+                if (tiempoTotal > 30 && tiempoTotal <=60){
+                    costo = 800;
+                } else if (tiempoTotal > 60) {
+                    costo = 2000;
+                }
+
+                System.out.println("Puesto " + i + " - tiempo: " + tiempoTotal + "minutos - total: $"+ costo);
+                ocupado[i] = false; //poner el puesto disponible 
+
+            }
+        }
+        System.out.println("Gracias por usar el parqueadero, vuleva pronto");
     }
 }
