@@ -1,5 +1,6 @@
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.Random;
 import java.util.Scanner;
 
 public class ActividadEvaluativa {
@@ -11,6 +12,7 @@ public class ActividadEvaluativa {
         String[] placas = new String[tam]; // para guardas las placas moto en los puestos
         LocalTime[] tiempoEntrada = new LocalTime[tam]; //para guardar la hora en el puesto 
         Scanner scanner = new Scanner(System.in);
+        Random random = new Random();//generar numeros aleatorios
         
 
 
@@ -51,7 +53,11 @@ public class ActividadEvaluativa {
                         System.out.print("Ingrese la placa");
                         placas[puesto] = scanner.nextLine();// para guardar la placa de la moto
                         ocupado[puesto] = true;
-                        tiempoEntrada[puesto] = LocalTime.now();//guardar la hora 
+                        
+                        //poner un tiempo aleatorio entre 10 y 120 minutos 
+                        int minutosAleatorios = random.nextInt(111) + 10;
+                        tiempoEntrada[puesto] = LocalTime.now().minusMinutes(minutosAleatorios);                        
+                        
                         System.out.println("Moto registrada en el puesto " + puesto + " a las " + tiempoEntrada[puesto]);
                     } else {
                         System.out.println("El puesto esta ocupado, eliga otro puesto.");
