@@ -27,53 +27,82 @@ public class ActividadEvaluativa {
                 }
             }
             System.out.println();
-            System.out.println("Seleccione un puetso del o al 20 o (-0 para salir)");
-            int puesto = scanner.nextInt(); // para que eliga un puesto
+
+            //menu de opciones 
+            System.out.println("Seleccione una opcion: ");
+            System.out.println("1. Registrar moto ");
+            System.out.println("2. Pagar y dejar puesto");
+            System.out.println("3. Salir");
+
+            int opcion = scanner.nextInt();
             scanner.nextLine();
-            if (puesto == -0){
-                System.out.println("Saliendo del programa");
-                break;
-            }
-            if (puesto >= 0 && puesto < tam) { // para saber si el puesto exite
-                if (!ocupado[puesto]) { // para ver si el puesto esta libre o ocupado
-                    System.out.print("Ingrese la placa");
-                    placas[puesto] = scanner.nextLine();// para guardar la placa de la moto
-                    ocupado[puesto] = true;
-                    tiempoEntrada[puesto] = LocalTime.now();//guardar la hora 
-                    System.out.println("Moto registrada en el puesto " + puesto + " a las " + tiempoEntrada[puesto]);
+
+
+
+            if (opcion == 1){
+                //registrar moto
+                System.out.println("Seleccione un puetso del o al 20 o (-0 para salir)");
+                 int puesto = scanner.nextInt(); // para que eliga un puesto
+                 scanner.nextLine();
+                 
+                 
+                 if (puesto >= 0 && puesto < tam) { // para saber si el puesto exite
+                    if (!ocupado[puesto]) { // para ver si el puesto esta libre o ocupado
+                        System.out.print("Ingrese la placa");
+                        placas[puesto] = scanner.nextLine();// para guardar la placa de la moto
+                        ocupado[puesto] = true;
+                        tiempoEntrada[puesto] = LocalTime.now();//guardar la hora 
+                        System.out.println("Moto registrada en el puesto " + puesto + " a las " + tiempoEntrada[puesto]);
+                    } else {
+                        System.out.println("El puesto esta ocupado, eliga otro puesto.");
+                    }
                 } else {
-                    System.out.println("El puesto esta ocupado, eliga otro puesto.");
+                    System.out.println("Numero de puesto invalido o no existe");
                 }
-            } else {
-                System.out.println("Numero de puesto invalido o no existe");
-            
-            }
-        }   
-
-    }
-    public static void cobrarParqueadero(boolean[] ocupado, String[] placas, LocalTime[] tiempoEntrada) {
-        System.out.println("cobro de parqueadero:");
-
-        for (int i = 0; i < ocupado.length; i++){
-            if (ocupado[i] && tiempoEntrada[i] != null) { //para cobrar solo si hay un tiempo regristado 
-                LocalTime tiempoSalida = LocalTime.now(); //sirve para guardar la hora de salida 
-                long tiempoTotal = Duration.between(tiempoEntrada[i], tiempoSalida).toMinutes();//calcular los minutos 
-
-                int costo = 0;
-                if (tiempoTotal > 30 && tiempoTotal <=60){
-                    costo = 800;
-                } else if (tiempoTotal > 60) {
-                    costo = 2000;
-                }
-
-                System.out.println("Puesto " + i + " - Placa: " + placas[i] + " - Tiempo: " + tiempoTotal + "minutos - total: $"+ costo);
+            } else if (opcion == 2){
+                //pagar y liberar puesto 
+                System.out.print("ingrese el numero de puesto que quiere pagar (0-20): ");
+                int puesto = scanner.nextInt();
+                scanner.nextLine();
                 
-                ocupado[i] = false; //poner el puesto disponible 
-                placas[i] = null;
-                tiempoEntrada[i] = null;
+                if (puesto >= 0 && puesto < tam) {
+                    if (ocupado[puesto] && tiempoEntrada[puesto] != null) { // para cobrar solo si hay un tiempo regristado
+                        LocalTime tiempoSalida = LocalTime.now(); // sirve para guardar la hora de salida
+                        long tiempoTotal = Duration.between(tiempoEntrada[puesto], tiempoSalida).toMinutes();// calcular los minutos
+                        
+                        int costo = 0;
+                        if (tiempoTotal > 30 && tiempoTotal <= 60) {
+                            costo = 800;
+                        } else if (tiempoTotal > 60) {
+                            costo = 2000;
+                        }
+                        
+                        System.out.println("Puesto " + puesto + " - Placa: " + placas[puesto]);
+                        System.out.println("tiempo; " + tiempoTotal + " minutos - Total a pagar: $" + costo);
+                        System.out.println("Pago realizado. El puesto esta disponible.");
 
+                        //vaciar puesto
+                        ocupado[puesto] = false; // poner el puesto disponible
+                        placas[puesto] = null;
+                        tiempoEntrada[puesto] = null;
+
+                    } else {
+                        System.out.println("El pueesto ya esta libre o no tiene registro de tiempo.");
+                    }
+                } else {
+                    System.out.println("Numero de puesto invalido.");
+                }
+            } else if (opcion == 3) {
+                //salir
+                System.out.println("Saliedno del programa...");
+                break;
+            } else {
+                System.out.println("Opcion invalida.");
             }
+
+            
         }
-        System.out.println("Gracias por usar el parqueadero, vuleva pronto");
+        scanner.close();
+        
     }
 }
