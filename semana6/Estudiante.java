@@ -72,7 +72,7 @@ public class Estudiante {
         return cad;
     }
 
-    public String tosString() {
+    public String toString() {
         return "Estudiante { id:" + id +
                " nombre:" + nombre + 
                " apellido:" + apellido + 
