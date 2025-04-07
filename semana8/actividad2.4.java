@@ -8,12 +8,16 @@ public class Cabina extends Equipaje {
    }
     // Metodos
     public double calcularPrecio(){
-        double precioFinal = getPrecioBase() + INCREMENTO_CABINA;
+        double precioFinal = getPrecioBase() + (getPeso() * getTamamio() * TIEMPO);
     // Calculos
     return precioFinal;
     }
 
-    
+    public String mostrarInformacion() {
+        return "Equipaje de Cabina/n"
+    }
+
+
     // getters/setters de ser necesarios
    }
    // Fin de la solución
