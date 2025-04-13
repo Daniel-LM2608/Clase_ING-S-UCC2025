@@ -1,23 +1,30 @@
 public class Cabina extends Equipaje {
     // Constantes
-    private final static int TIEMPO = 2;
-    // Constructores
-   public Cabina(double peso, double tamanio, double precioFinal) {
-    //super para heredar de equipaje sin tener que repetirlo y reutilizar codigo
-    super(peso, tamanio, 1000);//llamar constructor de equipaje con precio de 1000
-   }
-    // Metodos
-    public double calcularPrecio(){
-        double precioFinal = getPrecioBase() + (getPeso() * getTamamio() * TIEMPO);
-    // Calculos
-    return precioFinal;
+    private static final int TIEMPO = 2;
+
+    // Constructor por defecto
+    public Cabina() {
+        super(); // Llama al constructor por defecto de Equipaje
     }
 
+    // Constructor con parámetros
+    public Cabina(double peso, double tamanio, double precioFinal) {
+        super(peso, tamanio, 1000); // Precio base fijo en 1000
+    }
+
+    // Método sobrescrito para calcular el precio
+    @Override//“es una reescritura (override) de un método que existe en la clase padre o interfaz,""
+            // "me dice si hay algun error, me protege de errores ”
+    public double calcularPrecio() {
+        return getPrecioBase() + (getPeso() * getTamanio() * TIEMPO);
+    }
+
+    // Método para mostrar información del equipaje
     public String mostrarInformacion() {
-        return "Equipaje de Cabina/n"
+        return "Equipaje de Cabina\n" +
+               "Peso: " + getPeso() + "\n" +
+               "Tamaño: " + getTamanio() + "\n" +
+               "Precio Base: " + getPrecioBase() + "\n" +
+               "Precio Total: " + calcularPrecio();
     }
-
-
-    // getters/setters de ser necesarios
-   }
-   // Fin de la solución
+}
