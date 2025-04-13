@@ -1,19 +1,15 @@
 public class Main {
     public static void main(String[] args) {
-        // Crear algunos equipajes
-        Cabina cabina1 = new Cabina(5, 3, 1000);     // Cabina con peso 5, tamaño 3 y precioBase 1000
-        Bodega bodega1 = new Bodega(10, 2, 1500);    // Bodega con peso 10, tamaño 2 y precioBase 1500
-        Cabina cabina2 = new Cabina(4, 2.5, 1000);   // Cabina con peso 4, tamaño 2.5 y precioBase 1000
-        Bodega bodega2 = new Bodega(8, 3, 1200);     // Bodega con peso 8, tamaño 3 y precioBase 1200
+        Equipaje[] equipaje = new Equipaje[5];
 
-        // Arreglo de tipo Equipaje
-        Equipaje[] equipajes = { cabina1, bodega1, cabina2, bodega2 };
+        equipaje[0] = new Bodega(100.0, 10.0);         // precio = 1000 + 100*10*8 = 9000
+        equipaje[1] = new Bodega(200);                 // 200 + 10*4.5*8 = 200 + 360 = 560
+        equipaje[2] = new Cabina(150, 20.0, 0);        // 1000 + 150*20*2 = 7000
+        equipaje[3] = new Cabina();                    // 1000 + 10*4.5*2 = 190.0
+        equipaje[4] = new Bodega();                    // 1000 + 10*4.5*8 = 460.0
 
-        // Crear objeto PrecioTotal
-        PrecioTotal precios = new PrecioTotal(equipajes);
-
-        // Mostrar totales
-        precios.mostrarTotales();
+        PrecioTotal solucion = new PrecioTotal(equipaje);
+        solucion.mostrarTotales();
     }
 }
 

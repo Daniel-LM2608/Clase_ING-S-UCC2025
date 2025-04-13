@@ -1,12 +1,11 @@
 public class PrecioTotal {
-    private Equipaje[] equipajes;
     private double totalPrecios;
     private double totalBodega;
     private double totalCabina;
+    private Equipaje[] equipaje;
 
-    public PrecioTotal(Equipaje[] equipajes) {
-        this.equipajes = equipajes;
-        calcularTotales();
+    public PrecioTotal(Equipaje[] equipaje) {
+        this.equipaje = equipaje;
     }
 
     public void calcularTotales() {
@@ -14,25 +13,20 @@ public class PrecioTotal {
         totalBodega = 0;
         totalCabina = 0;
 
-        for (Equipaje e : equipajes) {
+        for (Equipaje e : equipaje) {
             double precio = e.calcularPrecio();
             totalPrecios += precio;
 
-            // Sumar precio según el tipo de equipaje
             if (e instanceof Bodega) {
                 totalBodega += precio;
             } else if (e instanceof Cabina) {
                 totalCabina += precio;
             }
         }
-
-        // Depuración para ver el cálculo
-        System.out.println("Total Equipaje Calculado: " + totalPrecios);
-        System.out.println("Total Bodega Calculado: " + totalBodega);
-        System.out.println("Total Cabina Calculado: " + totalCabina);
     }
 
     public void mostrarTotales() {
+        calcularTotales();
         System.out.println("Total Equipaje " + totalPrecios);
         System.out.println("Total Bodega " + totalBodega);
         System.out.println("Total Cabina " + totalCabina);

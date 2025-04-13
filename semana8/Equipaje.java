@@ -1,20 +1,19 @@
 public class Equipaje {
-    private static final double PESO = 10.0; // Peso por defecto
-    private static final double TAMANIO = 4.5; // Tamaño por defecto
-    private static final double PRECIO_BASE = 1000.0; // Precio base por defecto
+    private static final double PESO = 10.0;
+    private static final double TAMANIO = 4.5;
+    private static final double PRECIO_BASE = 1000.0;
 
     private double peso;
     private double tamanio;
     private double precioBase;
 
-    // Constructor por defecto
+    // Constructores
     public Equipaje() {
         this.peso = PESO;
         this.tamanio = TAMANIO;
         this.precioBase = PRECIO_BASE;
     }
 
-    // Constructor con todos los parámetros
     public Equipaje(double peso, double tamanio, double precioBase) {
         this.peso = peso;
         this.tamanio = tamanio;
@@ -47,17 +46,5 @@ public class Equipaje {
 
     public double getPrecioBase() {
         return precioBase;
-    }
-
-    public void setPeso(double peso) {
-        this.peso = peso;
-    }
-
-    public void setTamanio(double tamanio) {
-        this.tamanio = tamanio;
-    }
-
-    public void setPrecioBase(double precioBase) {
-        this.precioBase = precioBase;
     }
 }
