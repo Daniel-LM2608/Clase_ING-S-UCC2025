@@ -4,12 +4,12 @@ public class Bodega extends Equipaje {
 
     // Constructor con parámetros
     public Bodega(double peso, double tamanio, double precioBase) {
-        super(peso, tamanio, precioBase);
+        super(peso, tamanio, precioBase);  // Pasa el precio base correctamente
     }
 
     // Constructor por defecto (opcional)
     public Bodega() {
-        super(); // Usa valores por defecto definidos en Equipaje
+        super();  // Usa valores por defecto definidos en Equipaje
     }
 
     // Método sobrescrito para calcular el precio

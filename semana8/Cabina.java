@@ -13,9 +13,9 @@ public class Cabina extends Equipaje {
     }
 
     // Método sobrescrito para calcular el precio
-    @Override//“es una reescritura (override) de un método que existe en la clase padre o interfaz,""
-            // "me dice si hay algun error, me protege de errores ”
+    @Override
     public double calcularPrecio() {
+        // Verifica los valores y ajusta si es necesario
         return getPrecioBase() + (getPeso() * getTamanio() * TIEMPO);
     }
 
