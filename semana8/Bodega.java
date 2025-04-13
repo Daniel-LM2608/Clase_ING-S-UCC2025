@@ -1,18 +1,21 @@
 public class Bodega extends Equipaje {
     private static final double CAPACIDAD = 8.0;
 
+    // Constructor con parámetros
     public Bodega(double peso, double tamanio, double precioBase) {
         super(peso, tamanio, precioBase);
     }
 
+    // Constructor por defecto
     public Bodega() {
         super();
     }
 
     @Override
     public double calcularPrecio() {
+        // Cálculo del precio para Bodega
         double precioTotal = getPrecioBase() + (getPeso() * getTamanio() * CAPACIDAD);
-        System.out.println("Precio Bodega calculado: " + precioTotal); // Agregado para depuración
+        System.out.println("Precio Bodega calculado: " + precioTotal); // Depuración
         return precioTotal;
     }
 

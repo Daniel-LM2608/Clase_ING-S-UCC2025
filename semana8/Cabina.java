@@ -13,8 +13,9 @@ public class Cabina extends Equipaje {
 
     @Override
     public double calcularPrecio() {
+        // Cálculo del precio para Cabina
         double precioTotal = getPrecioBase() + (getPeso() * getTamanio() * TIEMPO);
-        System.out.println("Precio Cabina calculado: " + precioTotal); // Agregado para depuración
+        System.out.println("Precio Cabina calculado: " + precioTotal); // Depuración
         return precioTotal;
     }
 
@@ -26,4 +27,3 @@ public class Cabina extends Equipaje {
                "Precio Total: " + calcularPrecio();
     }
 }
-

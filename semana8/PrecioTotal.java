@@ -15,13 +15,21 @@ public class PrecioTotal {
         totalCabina = 0;
 
         for (Equipaje e : equipajes) {
-            totalPrecios += e.calcularPrecio(); // Suma el precio de cada equipaje
+            double precio = e.calcularPrecio();
+            totalPrecios += precio;
+
+            // Sumar precio según el tipo de equipaje
             if (e instanceof Bodega) {
-                totalBodega += e.calcularPrecio(); // Solo suma para Bodega
+                totalBodega += precio;
             } else if (e instanceof Cabina) {
-                totalCabina += e.calcularPrecio(); // Solo suma para Cabina
+                totalCabina += precio;
             }
         }
+
+        // Depuración para ver el cálculo
+        System.out.println("Total Equipaje Calculado: " + totalPrecios);
+        System.out.println("Total Bodega Calculado: " + totalBodega);
+        System.out.println("Total Cabina Calculado: " + totalCabina);
     }
 
     public void mostrarTotales() {
