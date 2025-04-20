@@ -18,7 +18,10 @@ public class PrecioTotal {
             totalPrecios += precio;
 
             if (e instanceof Bodega) {
-                totalBodega += precio;
+                totalBodega += precio;//instanceof es una forma común de trabajar con herencia 
+                //cuando necesitas saber qué subclase está siendo usada.
+                //Se usa cuando tienes una superclase como Equipaje y quieres saber si un objeto 
+                //es realmente una subclase, como Cabina o Bodega.
             } else if (e instanceof Cabina) {
                 totalCabina += precio;
             }

@@ -9,12 +9,15 @@ public class Equipaje {
 
     // Constructores
     public Equipaje() {
-        this.peso = PESO;
+        this.peso = PESO; //this para asignar un valor dado al atributo de un objeto
+        //los nombres de los parámetros (los que están entre paréntesis) son idénticos a los atributos del objeto. 
+        //Entonces usamos this. para indicar que nos referimos al atributo del objeto y no al parámetro local.
         this.tamanio = TAMANIO;
         this.precioBase = PRECIO_BASE;
     }
 
-    public Equipaje(double peso, double tamanio, double precioBase) {
+    public Equipaje(double peso, double tamanio, double precioBase) { //Este constructor recibe tres valores como parámetros
+        // (peso, tamanio, y precioBase) y los asigna a los atributos del objeto Equipaje.
         this.peso = peso;
         this.tamanio = tamanio;
         this.precioBase = precioBase;
