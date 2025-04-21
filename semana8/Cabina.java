@@ -1,7 +1,7 @@
 public class Cabina extends Equipaje {
     private static final int TIEMPO = 2;
 
-    public Cabina() {
+    public Cabina() { 
         super();
     }
 
