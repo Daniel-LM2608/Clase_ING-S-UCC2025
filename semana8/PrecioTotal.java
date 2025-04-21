@@ -1,6 +1,6 @@
 public class PrecioTotal {
     private double totalPrecios;
-    private double totalBodega;
+    private double totalBodega;// estos 3 sirven para guardar totales
     private double totalCabina;
     private Equipaje[] equipaje;
 
@@ -13,7 +13,8 @@ public class PrecioTotal {
         totalBodega = 0;
         totalCabina = 0;
 
-        for (Equipaje e : equipaje) {
+        for (Equipaje e : equipaje) {//e es un objeto del arreglo  que me sirve para no tener que mensionar el objeto como tal 
+            // se usa for each Es una forma simple de recorrer todos los elementos de un arreglo o colección, sin usar índices.
             double precio = e.calcularPrecio();
             totalPrecios += precio;
 
@@ -24,7 +25,15 @@ public class PrecioTotal {
                 //es realmente una subclase, como Cabina o Bodega.
             } else if (e instanceof Cabina) {
                 totalCabina += precio;
-            }
+            }//Recorre uno por uno todos los objetos que hay en el arreglo equipaje.
+
+            //A cada objeto le llama el método calcularPrecio() para saber cuánto cuesta.
+            
+            //Va sumando el precio total general (totalPrecios).
+            
+            //Si el objeto es una Bodega, suma su precio al total de bodegas (totalBodega).
+            
+            //Si el objeto es una Cabina, suma su precio al total de cabinas (totalCabina).
         }
     }
 
