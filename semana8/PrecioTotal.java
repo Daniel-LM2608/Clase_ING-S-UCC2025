@@ -15,17 +15,17 @@ public class PrecioTotal {
 
         for (Equipaje e : equipaje) {// e es un objeto del arreglo que me sirve para no tener que mensionar el objeto
                                      // como tal
-            // se usa for each Es una forma simple de recorrer todos los elementos de un
-            // arreglo o colección, sin usar índices.
+                                     // se usa for each Es una forma simple de recorrer todos los elementos de un
+                                     // arreglo o colección, sin usar índices.
             double precio = e.calcularPrecio();
             totalPrecios += precio;
 
             if (e instanceof Bodega) {
                 totalBodega += precio;// instanceof es una forma común de trabajar con herencia
-                // cuando necesitas saber qué subclase está siendo usada.
-                // Se usa cuando tienes una superclase como Equipaje y quieres saber si un
-                // objeto
-                // es realmente una subclase, como Cabina o Bodega.
+                                      // cuando necesitas saber qué subclase está siendo usada.
+                                      // Se usa cuando tienes una superclase como Equipaje y quieres saber si un
+                                      // objeto
+                                      // es realmente una subclase, como Cabina o Bodega.
             } else if (e instanceof Cabina) {
                 totalCabina += precio;
             } // Recorre uno por uno todos los objetos que hay en el arreglo equipaje.
