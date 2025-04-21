@@ -20,8 +20,9 @@ public class Equipaje {
 
     public Equipaje(double peso, double tamanio, double precioBase) { // Este constructor recibe tres valores como
                                                                       // parámetros
-        // (peso, tamanio, y precioBase) y los asigna a los atributos del objeto
-        // Equipaje.
+                                                                      // (peso, tamanio, y precioBase) y los asigna a
+                                                                      // los atributos del objeto
+                                                                      // Equipaje.
         this.peso = peso;
         this.tamanio = tamanio;
         this.precioBase = precioBase;
