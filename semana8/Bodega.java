@@ -8,7 +8,7 @@ public class Bodega extends Equipaje {
     public Bodega(double precioBase) {
         super(precioBase); //lama al constructor de la clase padre, que resive solo el precio base
     }
-    }
+    
 
     public Bodega() {
         super(); // el super usa los valores por defecto en equipaje 
