@@ -9,6 +9,7 @@ public class Cliente {
 
     /**
      * Constructor de la clase Cliente.
+     * 
      * @param cedula Identificación del cliente.
      * @param nombre Nombre del cliente.
      */
@@ -36,6 +37,7 @@ public class Cliente {
 
     /**
      * Método para mostrar la información del cliente.
+     * 
      * @return Información del cliente como String.
      */
     public String mostrarInformacion() {

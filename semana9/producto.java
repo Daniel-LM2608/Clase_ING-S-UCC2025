@@ -8,6 +8,7 @@ public abstract class Producto {
 
     /**
      * Constructor de la clase Producto.
+     * 
      * @param numero Número identificador del producto.
      */
     public Producto(int numero) {
@@ -26,6 +27,7 @@ public abstract class Producto {
     /**
      * Método abstracto para mostrar la información del producto.
      * Cada subclase debe implementarlo.
+     * 
      * @return Información del producto como String.
      */
     public abstract String mostrarInformacion();

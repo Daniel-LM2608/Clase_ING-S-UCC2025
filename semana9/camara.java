@@ -9,8 +9,9 @@ public class Camara extends Producto {
 
     /**
      * Constructor de la clase Camara.
+     * 
      * @param numero Número identificador del producto (heredado).
-     * @param marca Marca de la cámara.
+     * @param marca  Marca de la cámara.
      * @param modelo Modelo de la cámara.
      */
     public Camara(int numero, String marca, String modelo) {
@@ -38,12 +39,13 @@ public class Camara extends Producto {
 
     /**
      * Implementación del método abstracto mostrarInformacion().
+     * 
      * @return Información detallada de la cámara.
      */
     @Override
     public String mostrarInformacion() {
-        return "Cámara [Número: " + getNumero() + 
-               ", Marca: " + marca + 
-               ", Modelo: " + modelo + "]";
+        return "Cámara [Número: " + getNumero() +
+                ", Marca: " + marca +
+                ", Modelo: " + modelo + "]";
     }
 }

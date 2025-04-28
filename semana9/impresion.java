@@ -11,9 +11,10 @@ public class Impresion extends Producto {
 
     /**
      * Constructor de la clase Impresion.
+     * 
      * @param numero Número identificador del producto (heredado).
-     * @param color Color de la impresión.
-     * @param fotos Arreglo de fotos a imprimir.
+     * @param color  Color de la impresión.
+     * @param fotos  Arreglo de fotos a imprimir.
      */
     public Impresion(int numero, String color, Foto[] fotos) {
         super(numero); // Llamada al constructor de Producto
@@ -40,14 +41,15 @@ public class Impresion extends Producto {
 
     /**
      * Implementación del método abstracto mostrarInformacion().
+     * 
      * @return Información detallada de la impresión.
      */
     @Override
     public String mostrarInformacion() {
         StringBuilder sb = new StringBuilder();
         sb.append("Impresión [Número: ").append(getNumero())
-          .append(", Color: ").append(color)
-          .append(", Fotos: ");
+                .append(", Color: ").append(color)
+                .append(", Fotos: ");
 
         if (fotos != null && fotos.length > 0) {
             for (Foto foto : fotos) {

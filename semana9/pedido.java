@@ -13,9 +13,10 @@ public class Pedido {
 
     /**
      * Constructor de la clase Pedido.
-     * @param cliente Cliente que realiza el pedido.
-     * @param productos Arreglo de productos pedidos.
-     * @param fecha Fecha del pedido.
+     * 
+     * @param cliente              Cliente que realiza el pedido.
+     * @param productos            Arreglo de productos pedidos.
+     * @param fecha                Fecha del pedido.
      * @param numeroTarjetaCredito Número de tarjeta de crédito utilizado.
      */
     public Pedido(Cliente cliente, Producto[] productos, Date fecha, int numeroTarjetaCredito) {
@@ -60,14 +61,15 @@ public class Pedido {
 
     /**
      * Método para mostrar toda la información del pedido.
+     * 
      * @return Información detallada del pedido como String.
      */
     public String mostrarInformacion() {
         StringBuilder sb = new StringBuilder();
         sb.append("Pedido realizado por: ").append(cliente.mostrarInformacion()).append("\n")
-          .append("Fecha: ").append(fecha).append("\n")
-          .append("Número de Tarjeta: ").append(numeroTarjetaCredito).append("\n")
-          .append("Productos:\n");
+                .append("Fecha: ").append(fecha).append("\n")
+                .append("Número de Tarjeta: ").append(numeroTarjetaCredito).append("\n")
+                .append("Productos:\n");
 
         if (productos != null && productos.length > 0) {
             for (Producto producto : productos) {

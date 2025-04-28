@@ -8,6 +8,7 @@ public class Foto {
 
     /**
      * Constructor de la clase Foto.
+     * 
      * @param fichero Nombre del archivo de la foto.
      */
     public Foto(String fichero) {
