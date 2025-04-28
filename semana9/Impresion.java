@@ -1,7 +1,7 @@
 import java.util.Arrays;
 
 /**
- * Clase Impresion
+ * Clase Impresion.
  * Representa un producto de tipo impresión que contiene varias fotos.
  */
 public class Impresion extends Producto {

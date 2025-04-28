@@ -1,6 +1,6 @@
 import java.util.Date;
 
-public class Main {
+public class Main3 {
     public static void main(String[] args) {
         // Crear un cliente
         Cliente cliente = new Cliente("123456789", "Juan Pérez");
