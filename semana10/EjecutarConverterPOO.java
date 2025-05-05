@@ -8,9 +8,9 @@ public class EjecutarConverterPOO {
         Converter objPostScript = new PostScriptConverter("Libro", "c:Libros");
         Converter objPDF = new PDFConverter("Libro", "c:libros");
 
-        Reader objLector = new Reader("LINE", objPDF);
+        Reader objLector1 = new Reader("LINE", objPDF);
 
-        System.out.println(objLector.parseInput());
+        objLector1.parseInput();
 
     }
 }
