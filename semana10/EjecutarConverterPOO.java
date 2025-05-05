@@ -9,8 +9,10 @@ public class EjecutarConverterPOO {
         Converter objPDF = new PDFConverter("Libro", "c:libros");
 
         Reader objLector1 = new Reader("LINE", objPDF);
+        Reader objLector2 = new Reader("PARAGRAPH", objASCII);
 
         objLector1.parseInput();
+        objLector2.parseInput();
 
     }
 }
