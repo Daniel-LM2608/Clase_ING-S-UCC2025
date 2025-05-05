@@ -46,10 +46,14 @@ public class Impresion extends Producto {
      */
     @Override
     public String mostrarInformacion() {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder(); // StringBuilder, una clase eficiente
+        // para construir cadenas de texto paso a paso (más eficiente que usar +
+        // repetidamente).
         sb.append("Impresión [Número: ").append(getNumero())
                 .append(", Color: ").append(color)
                 .append(", Fotos: ");
+        // el append agrega texto al final de lo que ya tiene el StringBuilder.
+        // Es como ir construyendo un párrafo, parte por parte.
 
         if (fotos != null && fotos.length > 0) {
             for (Foto foto : fotos) {
@@ -60,6 +64,7 @@ public class Impresion extends Producto {
         }
 
         sb.append("]");
-        return sb.toString();
+        return sb.toString();// convierte todo el contenido en un String final.
+
     }
 }
