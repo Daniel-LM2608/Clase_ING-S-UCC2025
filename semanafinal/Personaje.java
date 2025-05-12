@@ -24,7 +24,7 @@ public class Personaje {
         int DanoBase = calcularDanoBase();
         oponente.recibirDano(DanoBase);
         System.out.println(this.nombre + " ataca a " + oponente.getNombre() +
-                           " causando " + dano + " puntos de daño.");
+                           " causando " + danoBase + " puntos de daño.");
     }
 
     public void recibirDano(int dano) {
