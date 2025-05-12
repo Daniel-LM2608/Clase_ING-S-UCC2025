@@ -5,10 +5,13 @@ public class Personaje {
     private int puntosDeVida;
     protected final int MAX_DANO = 30;
     protected final int MIN_DANO = 10;
+    private int defensa; // Atributo para la defensa
 
-    public Personaje(String nombre) {
+    public Personaje(String nombre, int defensa) {
         this.nombre = nombre;
         this.puntosDeVida = 100; // Todos comienzan con 100 puntos de vida
+        this.defensa=defensa;
+        
     }
      // Método para calcular el daño base, accesible solo para las subclases
     protected int calcularDanoBase() {
