@@ -3,18 +3,23 @@ import java.util.Random;
 public class Personaje {
     private String nombre;
     private int puntosDeVida;
-    private final int MAX_DANO = 30;
-    private final int MIN_DANO = 10;
+    protected final int MAX_DANO = 30;
+    protected final int MIN_DANO = 10;
 
     public Personaje(String nombre) {
         this.nombre = nombre;
         this.puntosDeVida = 100; // Todos comienzan con 100 puntos de vida
     }
+     // Método para calcular el daño base, accesible solo para las subclases
+    protected int calcularDanoBase() {
+        Random rand = new Random();
+        return rand.nextInt((MAX_DANO - MIN_DANO) + 1) + MIN_DANO;
+    }
 
     public void atacar(Personaje oponente) {
-        Random rand = new Random();
-        int dano = rand.nextInt((MAX_DANO - MIN_DANO) + 1) + MIN_DANO;
-        oponente.recibirDano(dano);
+       
+        int DanoBase = calcularDanoBase();
+        oponente.recibirDano(DanoBase);
         System.out.println(this.nombre + " ataca a " + oponente.getNombre() +
                            " causando " + dano + " puntos de daño.");
     }

@@ -1,7 +1,8 @@
 import java.util.Random;
 private static final int FUERZA = 5;
 private static final int Resistecia = 6;
-private static final String ATAQUE DE KI = 10;
+private static final String ATAQUE DE KI = 7;
+private static final String KAME HAME HA = 15;
 
 
 public class Goku extends Personaje {
