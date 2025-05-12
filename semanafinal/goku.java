@@ -10,20 +10,57 @@ public class Goku extends Personaje {
      }
      @Override
     public void atacar(Personaje oponente) {
+        String poderElegido = elegirPoder();
         // Usamos el método calcularDanoBase() de Personaje para calcular el daño base
         int danoBase = calcularDanoBase();
         int danoTotal = danoBase + FUERZA;  // Se agrega la fuerza del Guerrero al daño base
 
+
+
+        if (poderElegido.equals("Ataque de KI")) {
+            // El poder especial ahora siempre se activa
+            danoTotal *= 2;  // Multiplicamos el daño por 2, por ejemplo
+            System.out.println(getNombre() + " Realiza un ataque de KI");
+        } else if (poderElegido.equals("Kame Hame Ha")) {
+            // multiplicamos el daño total por 2
+            danoTotal *= 4;
+            System.out.println(getNombre() + " realiza el KAME HAME HA !!!");
+        }
+
         oponente.recibirDano(danoTotal);
         System.out.println(getNombre() + " ataca con" + golpe + " causando " + danoTotal + " puntos de daño.");
     }
+
+       // Método para que el jugador elija el poder
+    private String elegirPoder() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Elige un poder:");
+        System.out.println("1. Ataque de KI (daño x2)");
+        System.out.println("2. Kame Hame Ha (daño x4)");
+        System.out.print("Ingresa el número de la opción: ");
+        
+        int opcion = scanner.nextInt();
+        String poderElegido = "";
+
+        switch (opcion) {
+            case 1:
+                poderElegido = "Ataque de KI";
+                break;
+            case 2:
+                poderElegido = "Kame Hame Ha";
+                break;
+            default:
+                System.out.println("Opción no válida. Se elegirá Ataque de KI por defecto.");
+                poderElegido = "Ataque de KI";
+        }
+
+        return poderElegido;
+    }
+
       public int getFuerza() {
         return FUERZA;
     }
 
-    public String getArma() {
-        return ARMA;
-    }
 }
 
      
