@@ -1,13 +1,14 @@
-import java.util.Random;
-private static final int FUERZA = 5;
-private static final int Resistecia = 6;
-
+import java.util.Scanner;
 
 public class Goku extends Personaje {
-
-     public Goku(String nombre) {
-        super(nombre);
+    private static final int FUERZA = 5;
+    private static final int Resistecia = 6;
+    
+        
+    public Goku(String nombre) {
+            super(nombre);
      }
+
      @Override
     public void atacar(Personaje oponente) {
         String poderElegido = elegirPoder();
@@ -62,6 +63,7 @@ public class Goku extends Personaje {
     }
 
 }
+
 
      
     
