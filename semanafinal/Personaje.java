@@ -13,6 +13,16 @@ public class Personaje {
         this.defensa=defensa;
         
     }
+
+     public int getDefensa() {
+        return defensa;
+    }
+
+    public void setDefensa(int defensa) {
+        this.defensa = defensa;
+    }
+
+
      // Método para calcular el daño base, accesible solo para las subclases
     protected int calcularDanoBase() {
         Random rand = new Random();
@@ -24,15 +34,25 @@ public class Personaje {
         int DanoBase = calcularDanoBase();
         oponente.recibirDano(DanoBase);
         System.out.println(this.nombre + " ataca a " + oponente.getNombre() +
-                           " causando " + danoBase + " puntos de daño.");
+                           " causando " + DanoBase+ " puntos de daño.");
     }
 
-    public void recibirDano(int dano) {
-        this.puntosDeVida -= dano;
-        if (this.puntosDeVida < 0) {
-            this.puntosDeVida = 0;
-        }
+   public void recibirDano(int dano) {
+    int danoReducido = dano - this.defensa;
+    // Aseguramos que el daño no sea negativo
+    if (danoReducido < 0) {
+        danoReducido = 0;
     }
+    
+     this.puntosDeVida = Math.max(0, this.puntosDeVida - danoReducido);
+     //asegurar que los puntos de vida no bajen de 0, sin necesidad de usar un if.
+     
+     System.out.println(this.nombre + " recibe " + danoReducido + " puntos de daño tras aplicar su defensa de " + this.defensa);
+
+     if (this.puntosDeVida == 0) {
+            System.out.println(this.nombre + " ha sido derrotado.");
+        }
+}
 
     public boolean estaVivo() {
         return this.puntosDeVida > 0;
@@ -45,4 +65,8 @@ public class Personaje {
     public int getPuntosDeVida() {
         return this.puntosDeVida;
     }
+    public String toString() {
+        return nombre + " (HP: " + puntosDeVida + ", DEF: " + defensa + ")";
+    }
 }
+

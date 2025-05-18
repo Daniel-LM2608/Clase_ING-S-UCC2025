@@ -2,11 +2,11 @@ import java.util.Scanner;
 
 public class Goku extends Personaje {
     private static final int FUERZA = 5;
-    private static final int Resistecia = 6;
+    private static final int RECISTENCIA = 6;
     
         
     public Goku(String nombre) {
-            super(nombre);
+            super(nombre,RECISTENCIA);
      }
 
      @Override
@@ -18,10 +18,10 @@ public class Goku extends Personaje {
 
 
 
-        if (poderElegido.equals("Ataque de KI")) {
+        if (poderElegido.equals("Puño del Dragón")) {
             // El poder especial ahora siempre se activa
-            danoTotal *= 2;  // Multiplicamos el daño por 2, por ejemplo
-            System.out.println(getNombre() + " Realiza un ataque de KI");
+            danoTotal *= 10;  // Multiplicamos el daño por 2, por ejemplo
+            System.out.println(getNombre() + " Realiza un Puño del Dragón");
         } else if (poderElegido.equals("Kame Hame Ha")) {
             // multiplicamos el daño total por 2
             danoTotal *= 4;
@@ -29,14 +29,14 @@ public class Goku extends Personaje {
         }
 
         oponente.recibirDano(danoTotal);
-        System.out.println(getNombre() + " ataca con" + golpe + " causando " + danoTotal + " puntos de daño.");
+        System.out.println(getNombre() + " ataca con" + poderElegido + " causando " + danoTotal + " puntos de daño.");
     }
 
        // Método para que el jugador elija el poder
     private String elegirPoder() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Elige un poder:");
-        System.out.println("1. Ataque de KI (daño x2)");
+        System.out.println("1. Puño del Dragón (daño x10)");
         System.out.println("2. Kame Hame Ha (daño x4)");
         System.out.print("Ingresa el número de la opción: ");
         
@@ -45,14 +45,14 @@ public class Goku extends Personaje {
 
         switch (opcion) {
             case 1:
-                poderElegido = "Ataque de KI";
+                poderElegido = "Puño del Dragón";
                 break;
             case 2:
                 poderElegido = "Kame Hame Ha";
                 break;
             default:
-                System.out.println("Opción no válida. Se elegirá Ataque de KI por defecto.");
-                poderElegido = "Ataque de KI";
+                System.out.println("Opción no válida. Se elegiráKame Hame Ha por defecto.");
+                poderElegido = "Kame Hame Ha";
         }
 
         return poderElegido;
