@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Goku extends Personaje {
     private static final int FUERZA = 5;
-    private static final int RECISTENCIA = 20;
+    private static final int RECISTENCIA = 28;
     
         
     public Goku(String nombre) {

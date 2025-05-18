@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Vegeta extends Personaje {
     private static final int FUERZA = 7;       // Más fuerza que Goku
-    private static final int RESISTENCIA = 17;  // Resistencia diferente
+    private static final int RESISTENCIA = 25;  // Resistencia diferente
 
     public Vegeta(String nombre) {
         super(nombre, RESISTENCIA);

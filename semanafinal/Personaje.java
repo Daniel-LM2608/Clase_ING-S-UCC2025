@@ -26,7 +26,9 @@ public class Personaje {
      // Método para calcular el daño base, accesible solo para las subclases
     protected int calcularDanoBase() {
         Random rand = new Random();
-        return rand.nextInt((MAX_DANO - MIN_DANO) + 1) + MIN_DANO;
+        int dano = rand.nextInt((MAX_DANO - MIN_DANO) + 1) + MIN_DANO;
+        System.out.println("Daño base generado: " + dano); 
+        return dano;
     }
 
     public void atacar(Personaje oponente) {
