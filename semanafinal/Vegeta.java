@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
 public class Vegeta extends Personaje {
-    private static final int FUERZA = 7;       // Más fuerza que Goku
-    private static final int RESISTENCIA = 25;  // Resistencia diferente
+    private static final int FUERZA = 7; // Más fuerza que Goku
+    private static final int RESISTENCIA = 25; // Resistencia diferente
 
     public Vegeta(String nombre) {
         super(nombre, RESISTENCIA);
@@ -32,8 +32,8 @@ public class Vegeta extends Personaje {
         System.out.println("1. Big Bang Attack (daño x3)");
         System.out.println("2. Final Flash (daño x8)");
         System.out.print("Ingresa el número de la opción: ");
-        
-         int opcion = scanner.nextInt();
+
+        int opcion = scanner.nextInt();
         String poderElegido = "";
 
         switch (opcion) {
@@ -51,7 +51,7 @@ public class Vegeta extends Personaje {
         return poderElegido;
     }
 
-     public int getFuerza() {
+    public int getFuerza() {
         return FUERZA;
     }
 }
