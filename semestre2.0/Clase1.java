@@ -19,7 +19,7 @@ public class Clase1 {
 
         OperacionesArreglos objArreglos = new OperacionesArreglos();
 
-        int[] numeros = objArreglos.llenarArregloEnteros(5);
+        int[] numeros = objArreglos.llenarArregloEnteros(6);
 
         System.out.println(Arrays.toString(numeros));
     }
