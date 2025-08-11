@@ -1,17 +1,15 @@
 public class Estudiantev2 {
 
 
-    private int 
-
-
-
-
-
+    private int id;
+    private String nombre;
+    private String apellido;
+    private String facultad;
 
 
 
     //constructor de la clase 
-    public Estudiante(int id, string nombre, string apellido, string facultad){
+    public Estudiantev2(int id, String nombre, String apellido, String facultad){
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -22,11 +20,17 @@ public class Estudiantev2 {
         return id;
     }
 
-    public void matricularCursos(int id, string[] cursos){
-        string cad = "";
-        for(int i = 0; i < cursos.lenght; i++){
+    public void matricularCursos(int id, String[] cursos){
+        String cad = "";
+        for(int i = 0; i < cursos.length; i++){
             cad += cursos[i] + " ";
         }
         System.out.println("id:" + id + "cursos Martriculados:" + cad);
+    }
+    public String toString() {
+        return "Estudiante { id:" + id +
+               " nombre:" + nombre + 
+               " apellido:" + apellido +  
+               " facultad:" + facultad + "}";
     }
 }
