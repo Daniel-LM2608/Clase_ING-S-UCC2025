@@ -37,11 +37,17 @@ public class EjecutarEstu {
         }
         
         System.out.println("-----------------");
+  // Matricular cursos
+        objEst1.matricularCursos(18, new String[]{"Matemáticas", "Física"});
+        objEst2.matricularCursos(23, new String[]{"Matemáticas", "Programación"});
+        objEst3.matricularCursos(20, new String[]{"Programación"});
+        est[3].matricularCursos(506070, new String[]{"Psicología", "Filosofía"});
+        est[4].matricularCursos(304050, new String[]{"Derecho"});
 
-        for(int i = 0; i < est.length; i++){
-            System.out.println(est[i]);
-        }
+        System.out.println("---------------");
+        Estudiantev2.contarEstudiantesPorFacultad(est);
 
-
+        System.out.println("---------------");
+        Estudiantev2.contarEstudiantesPorCurso(est);
     }
 }
