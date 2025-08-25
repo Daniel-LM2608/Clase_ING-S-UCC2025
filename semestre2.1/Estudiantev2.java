@@ -1,16 +1,13 @@
 public class Estudiantev2 {
 
-
     private int id;
     private String nombre;
     private String apellido;
     private String facultad;
     private String[] cursos; // nuevo atributo
 
-
-
-    //constructor de la clase 
-    public Estudiantev2(int id, String nombre, String apellido, String facultad){
+    // constructor de la clase
+    public Estudiantev2(int id, String nombre, String apellido, String facultad) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -18,10 +15,11 @@ public class Estudiantev2 {
 
     }
 
-    public int getid(){
+    public int getid() {
         return id;
     }
-     public String getFacultad() {
+
+    public String getFacultad() {
         return facultad;
     }
 
@@ -29,13 +27,13 @@ public class Estudiantev2 {
         return cursos;
     }
 
-     // 🔹 1. Método matricularCursos
-    public void matricularCursos(int id, String[] cursos){
-        this.cursos = cursos;  // guardamos los cursos
+    // 🔹 1. Método matricularCursos
+    public void matricularCursos(int id, String[] cursos) {
+        this.cursos = cursos; // guardamos los cursos
         String cad = "";
-        for(int i = 0; i < cursos.length; i++){
+        f
+        }or (int i = 0; i < cursos.length; i++) {
             cad += cursos[i] + " ";
-        }
         System.out.println("id:" + id + " → cursos matriculados: " + cad);
     }
 
@@ -44,9 +42,12 @@ public class Estudiantev2 {
         int contadorIng = 0, contadorPsi = 0, contadorDer = 0;
         for (Estudiantev2 e : est) {
             if (e != null) {
-                if (e.getFacultad().equalsIgnoreCase("Ingenieria")) contadorIng++;
-                else if (e.getFacultad().equalsIgnoreCase("Psicologia")) contadorPsi++;
-                else if (e.getFacultad().equalsIgnoreCase("Derecho")) contadorDer++;
+                if (e.getFacultad().equalsIgnoreCase("Ingenieria"))
+                    contadorIng++;
+                else if (e.getFacultad().equalsIgnoreCase("Psicologia"))
+                    contadorPsi++;
+                else if (e.getFacultad().equalsIgnoreCase("Derecho"))
+                    contadorDer++;
             }
         }
         System.out.println("Estudiantes en Ingenieria: " + contadorIng);
@@ -74,10 +75,11 @@ public class Estudiantev2 {
             }
         }
     }
-     public String toString() {
+
+    public String toString() {
         return "Estudiante { id:" + id +
-               " nombre:" + nombre + 
-               " apellido:" + apellido +  
-               " facultad:" + facultad + "}";
-    } 
+                " nombre:" + nombre +
+                " apellido:" + apellido +
+                " facultad:" + facultad + "}";
+    }
 }
