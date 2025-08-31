@@ -8,11 +8,7 @@ public class ejecutarlibro {
         L[3] = new libro ("libro4", "autor4", 100); 
         L[4] = new libro ("libro5", "autor5", 67); 
 
-        for (int i = 0; i < L.length; i++) {
-                L[i] = precio + precio;
-    }
-    for (int i = 0; i < L.length; i++) {
-                System.out.println("ganacia de la vivienda[" + i + "]=" + L[i]);
-    }
+        System.out.println(L[0].iterarLibro(L));
+     }
 }
-}
+                     
