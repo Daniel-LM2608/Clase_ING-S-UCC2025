@@ -31,10 +31,11 @@ public class Estudiantev2 {
     public void matricularCursos(int id, String[] cursos) {
         this.cursos = cursos; // guardamos los cursos
         String cad = "";
-        f
-        }or (int i = 0; i < cursos.length; i++) {
+        for (int i = 0; i < cursos.length; i++) {
             cad += cursos[i] + " ";
         System.out.println("id:" + id + " → cursos matriculados: " + cad);
+        }
+    
     }
 
     // 🔹 2. Método contar estudiantes por facultad
