@@ -11,6 +11,11 @@ public class libro {
         
     }
 
+      // Getter del precio
+    public int getPrecio() {
+        return precio;
+    }
+
     
     public String toString() {
         return "libro { titulo:" + titulo + 
@@ -19,7 +24,7 @@ public class libro {
     }   
 
 
-   //Método para iterar el arreglo
+   
       //Método para iterar el arreglo
     public String iterarLibro(libro[] L){
         String cad = "";
@@ -28,6 +33,13 @@ public class libro {
         }
         return cad;
     
+    }
+    public int totalPrecios(libro[] L){
+        int total = 0;
+        for(int i = 0; i < L.length; i++){
+            total += L[i].getPrecio();
+        }
+        return total;
     }
 }
 

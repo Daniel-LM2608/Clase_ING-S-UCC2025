@@ -9,6 +9,7 @@ public class ejecutarlibro {
         L[4] = new libro ("libro5", "autor5", 67); 
 
         System.out.println(L[0].iterarLibro(L));
+        System.out.println("Precio total de todos los libros: "  + L[0].totalPrecios(L));
      }
 }
                      
