@@ -4,7 +4,7 @@ public class EjecutarMatrices {
         
         MatricesEstructuraDeDatos objMatrices = new MatricesEstructuraDeDatos();
 
-        int[][] m = objMatrices.llenarMatrizEnteros(3, 3);
+        int[][] m = objMatrices.llenarMatrizEnteros(7, 7);
 
         System.out.println(objMatrices.mostrarMatrizEnteros(m));
     }
