@@ -27,6 +27,8 @@ public class Proyecto3 {
                 }
             }
             System.out.println();
+        }
     }
     
 }
+
