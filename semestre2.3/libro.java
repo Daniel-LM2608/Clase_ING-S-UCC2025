@@ -41,5 +41,16 @@ public class libro {
         }
         return total;
     }
+
+     public String filtrarLibro(libro[] L, int valor){
+        String resultado = "";
+        for(int i = 0; i < L.length; i++){
+            if(L[i].getPrecio() > valor ){
+            resultado += L[i].toString() + "\n";
+            }
+            
+        }
+        return resultado;
+    }
 }
 

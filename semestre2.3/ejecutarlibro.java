@@ -1,6 +1,10 @@
+import java.nio.channels.Pipe.SourceChannel;
+import java.util.Scanner;
+
 public class ejecutarlibro {
     public static void main(String[] args) {
         libro[] L = new libro[5];
+        Scanner sc = new Scanner(System.in);
 
         L[0] = new libro ("libro1", "autor1", 100); 
         L[1] = new libro ("libro2", "autor2", 90); 
@@ -8,8 +12,16 @@ public class ejecutarlibro {
         L[3] = new libro ("libro4", "autor4", 100); 
         L[4] = new libro ("libro5", "autor5", 67); 
 
+       
         System.out.println(L[0].iterarLibro(L));
         System.out.println("Precio total de todos los libros: "  + L[0].totalPrecios(L));
+
+
+        System.out.println("Ingrese el valor de filtrado: ");
+        int valorFiltro = sc.nextInt();
+
+        System.out.println("Libros con precio mayor: " + valorFiltro + ":");
+        System.out.println(L[0].filtrarLibro(L, valorFiltro));
      }
 }
                      
