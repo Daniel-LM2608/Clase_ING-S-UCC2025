@@ -1,13 +1,14 @@
 package MiniProyecto;
+
  public class casillero {
  
     private int id;
     private String tamano;
     private paquete paquete;
 
-    public casillero (int id, String tamano){
-        this.id;
-        this.tamano;
+    public casillero(int id, String tamano) {
+        this.id = id;
+        this.tamano = tamano;
         this.paquete = null;
     }
     
@@ -15,9 +16,10 @@ package MiniProyecto;
             return paquete == null;
         }
 
-        public void asignarPaquete(Paquete p){
+        public void asignarPaquete(paquete p){//Paquete = la clase (como decir int, String, Libro, etc.).
+                                              //p = el parámetro/variable que recibes en ese método.
             if (disponible()){
-                if(p.getTamano().equalsIgnoreCase(this.tamano)){
+                if(p.getTamano().equalsIgnoreCase(this.tamano)){//equalsIgnoreCase sirve para comparar 2 cadenas ignorando mayuscula o minuscula
                     paquete = p;
                     System.out.println("Paquete asignado al casillero " + id);
                 } else {
@@ -38,7 +40,7 @@ package MiniProyecto;
             }
         }
 
-        public String getInfor(){
+        public String getInfo(){
             if (disponible()){
                 return "casillero " + id + "(" + tamano + ") Disponible";
             } else {

@@ -1,9 +1,9 @@
+package MiniProyecto;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public package MiniProyecto;
-
-class paquete {
+public class paquete {
 
      private String destinatario;
      private String tamano;
