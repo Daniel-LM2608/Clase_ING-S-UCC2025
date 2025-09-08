@@ -23,7 +23,44 @@ package MiniProyecto;
                 } else {
                     System.out.println("El paquete (" + p.getTamano()+ ") escede el tamaño del casilero (" + tamano + ")");
                 }
+            } else {
+                System.out.println("Casillero ocupado.");
+
             }
+        }
+
+        public void vaciarCasillero(){
+            if(disponible()){
+                System.out.println("Casillero " + id + " libre");
+            } else {
+                System.out.println("Paquete retirado" + id + ":" + paquete.toString());
+                paquete = null;
+            }
+        }
+
+        public String getInfor(){
+            if (disponible()){
+                return "casillero " + id + "(" + tamano + ") Disponible";
+            } else {
+                 return "casillero " + id + "(" + tamano + ")" + paquete.toString();
+            }
+        }
+
+        public boolean tamanoCorrecto(String tamano){
+            return this.tamano.equalsIgnoreCase(tamano);
+
+        }
+
+        public boolean isOcupado(){
+            return !disponible();
+        }
+
+        public int getId(){
+            return id;
+        }
+
+        public String getTamano(){
+            return tamano;
         }
     }
 
