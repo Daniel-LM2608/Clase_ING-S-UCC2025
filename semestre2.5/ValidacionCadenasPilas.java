@@ -24,7 +24,8 @@ public class ValidacionCadenasPilas {
 
 
           for (int i = 0; i < tam; i++) {
-            if (p.peek().equals("{")) {
+            if (p.peek().equals("{")) { 
+                //equals comprara cadenas el == es para numeros
                 contador1 += 1;
 
             }else{
@@ -32,8 +33,23 @@ public class ValidacionCadenasPilas {
             }
             p.pop();
           }
-
+                             //operador ternario lo mismo que lo de abajo pero mas ordenado
           System.out.println(contador1 == contador2 ? "Equilibrados" : "No Equilibrados");
+
+          /*if(contador1 == contador2){
+            System.out.println("Equilibrado");
+
+          }else {
+            System.out.println("No Equilibrado");
+          }
+        
+           */
+
+        
+
+
+          
+
 
 
     }
