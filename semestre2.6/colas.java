@@ -38,6 +38,12 @@ public class colas {
 
         System.out.println(cola);
 
+        cola.clear();
+
+        System.out.println(cola.poll());
+
+        
+
 
 
 
