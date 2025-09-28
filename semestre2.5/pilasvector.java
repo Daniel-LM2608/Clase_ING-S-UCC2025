@@ -101,7 +101,7 @@ public class pilasvector {
         System.out.println("isEmpty: " + v.isEmpty());
 
         // iterator(): recorre los elementos
-        Iterator<String> it = v.iterator();
+        java.util.Iterator<String> it = v.iterator();
         System.out.print("iterator: ");
         while (it.hasNext()) {
             System.out.print(it.next() + " ");
