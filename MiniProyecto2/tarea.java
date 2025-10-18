@@ -3,14 +3,14 @@ public class tarea {
     private String id;
     private String descripcion;
     private int prioridad;
-    private long tiempollegada;
+    private long tiempoLlegada;
 
-    public tarea(String id, String descripcion, int prioridad, long tiempollegada ){
+    public tarea(String id, String descripcion, int prioridad, long tiempoLlegada ){
 
     this.id = id;
     this.descripcion = descripcion;
     this.prioridad = prioridad;
-    this.tiempollegada= tiempollegada;
+    this.tiempoLlegada= tiempoLlegada;
     }
 
     @Override
@@ -20,7 +20,7 @@ public class tarea {
                 "id ="+ id + 
                 "Descripcion = " + descripcion +
                 "Prioridad =" + prioridad +
-                "Tiempo de llegada =" + tiempollegada +
+                "Tiempo de llegada =" + tiempoLlegada +
                 "}";
 
     }
@@ -50,11 +50,11 @@ public class tarea {
     }
 
     public long getTiempoLlegada(){
-        return tiempollegada;
+        return tiempoLlegada;
     }
 
     public void setTiempoLlegada(long tiempollegada){
-        this.tiempollegada = tiempollegada;
+        this.tiempoLlegada = tiempollegada;
     }
 
 
