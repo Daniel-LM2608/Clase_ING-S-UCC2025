@@ -63,14 +63,21 @@ public class GestorTareas {
 
         public String consultarEstadoTarea(String idTarea) {
                 if(Trazabilidad.containsKey(idTarea)){
-                    return
-                }else{
-                    for(Prioritaria.empty()&&Espera.isEmpty()== getId){
-                        System.out.println("Tarea pendiente");
+                    return "Tarea completada";
+                
+                for(tarea t : Prioritaria){
+                    if(t.getId().equals(idTarea)){
+                        return "Tarea pendiente";
                     }
-                    System.out.println("ID no encontrado");
+                }
 
+                for(tarea t : Espera){
+                    if(t.getId().equals(idTarea)){
+                        return "Tarea en espera";
                     }
+                }
+
+                return "ID no encontrado";
                 }
 
         }
