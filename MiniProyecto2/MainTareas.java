@@ -14,21 +14,22 @@ public class MainTareas {
         
         System.out.println("Procesando Tareas");
 
-        // 🔹 Procesar solo 3 tareas
-        for (int i = 0; i < 3; i++) {
-            tarea procesada = gestor.procesarSiguienteTarea();
+        // Procesar solo 4 tareas
+        for (int i = 0; i < 4; i++) {
+            tarea procesada= gestor.procesarSiguienteTarea();
             if (procesada != null) {
-                System.out.println("Procesada: " + procesada.getDescripcion());
+                System.out.println("Procesada: " + procesada.getId() + " - " + procesada.getDescripcion());
+            } else {
+                System.out.println("No hay más tareas por procesar.");
+                break;
             }
         }
-
-        System.out.println("No quedan más tareas por procesar.");
         System.out.println("Registro de trazabilidad:");
         gestor.mostrarTrazabilidad();
 
         // 🔹 Consulta de estado por teclado
         Scanner sc = new Scanner(System.in);
-        System.out.println("\nConsulta de estado de tareas");
+        System.out.println("Consulta de estado de tareas");
         System.out.print("Ingresa el ID de la tarea: ");
         String id = sc.nextLine(); // Lee el ID que escribe el usuario
 
