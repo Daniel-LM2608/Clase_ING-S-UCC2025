@@ -27,7 +27,7 @@ public class GestorTareas {
         }
         
     }
-
+    
     public tarea procesarSiguienteTarea(){
         tarea tareaProcesada;
         if(!Prioritaria.empty()){
@@ -35,8 +35,8 @@ public class GestorTareas {
         }else {
             if(!Espera.isEmpty()){
             tareaProcesada = Espera.poll();
-        }
-        else {
+            }
+        }else {
             return null;
         }
 
@@ -46,11 +46,11 @@ public class GestorTareas {
             " - Tiempo de llegada:" + tareaProcesada.getTiempoLlegada()
             );
 
-
-
-        return tareaProcesada;
-
-        public void mostrarTrazabilidad(){
+    }
+    
+    return tareaProcesada;
+    
+    public void mostrarTrazabilidad(){
             System.out.println("Registro de trazabilidad");
             if (Trazabilidad.isEmpty()){
                 System.out.println("No hay tareas procesadas");
@@ -59,32 +59,27 @@ public class GestorTareas {
                     System.out.println("ID : " + entrada.getKey() + "-" + entrada.getValue());
                 }
             }
-        }
-
-        public String consultarEstadoTarea(String idTarea) {
-                if(Trazabilidad.containsKey(idTarea)){
-                    return "Tarea completada";
-                
-                for(tarea t : Prioritaria){
-                    if(t.getId().equals(idTarea)){
-                        return "Tarea pendiente";
-                    }
-                }
-
-                for(tarea t : Espera){
-                    if(t.getId().equals(idTarea)){
-                        return "Tarea en espera";
-                    }
-                }
-
-                return "ID no encontrado";
-                }
-
-        }
-
-        
-
     }
+    
+    
+    public String consultarEstadoTarea(String idTarea) {
+        if(Trazabilidad.containsKey(idTarea)){
+            return "Tarea completada";
+                
+            for(tarea t : Prioritaria){
+                if(t.getId().equals(idTarea)){
+                    return "Tarea pendiente";
+                }
+            }
+            for(tarea t : Espera){
+                if(t.getId().equals(idTarea)){
+                    return "Tarea en espera";
+                }
+            }
+            return "ID no encontrado";
+        }
+    }
+}
 
         
 
