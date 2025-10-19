@@ -50,6 +50,31 @@ public class GestorTareas {
 
         return tareaProcesada;
 
+        public void mostrarTrazabilidad(){
+            System.out.println("Registro de trazabilidad");
+            if (Trazabilidad.isEmpty()){
+                System.out.println("No hay tareas procesadas");
+            }else {
+                for(Map.Entry<String, String> entrada : Trazabilidad.entrySet()){
+                    System.out.println("ID : " + entrada.getKey() + "-" + entrada.getValue());
+                }
+            }
+        }
+
+        public String consultarEstadoTarea(String idTarea) {
+                if(Trazabilidad.containsKey(idTarea)){
+                    return
+                }else{
+                    for(Prioritaria.empty()&&Espera.isEmpty()== getId){
+                        System.out.println("Tarea pendiente");
+                    }
+                    System.out.println("ID no encontrado");
+
+                    }
+                }
+
+        }
+
         
 
     }
