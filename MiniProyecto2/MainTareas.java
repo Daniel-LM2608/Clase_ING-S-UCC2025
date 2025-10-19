@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class MainTareas {
     
     public static void main(String[] args) {
@@ -8,29 +10,36 @@ public class MainTareas {
         gestor.agregarTarea(new tarea("2703", "Notificacion de reportes", 2, System.currentTimeMillis()));
         gestor.agregarTarea(new tarea("0308", "Reporte de insidentes", 3, System.currentTimeMillis()));
         gestor.agregarTarea(new tarea("2005", "Notificaciones de personal", 1, System.currentTimeMillis()));
-        gestor.agregarTarea(new tarea("0709", "Actualizacion de empleados", 2, System.currentTimeMillis()));
-
+        gestor.agregarTarea(new tarea("2003", "Actualizacion de empleados", 2, System.currentTimeMillis()));
+        
         System.out.println("Procesando Tareas");
 
-        tarea procesada1 = gestor.procesarSiguienteTarea();
-        if(procesada1 != null){
-            System.out.println("Procesada:" + procesada1.getDescripcion());
+        // 🔹 Procesar solo 3 tareas
+        for (int i = 0; i < 3; i++) {
+            tarea procesada = gestor.procesarSiguienteTarea();
+            if (procesada != null) {
+                System.out.println("Procesada: " + procesada.getDescripcion());
+            }
         }
 
-        tarea procesada2 = gestor.procesarSiguienteTarea();
-        if(procesada2 != null){
-            System.out.println("Procesada:" + procesada2.getDescripcion());
-        }
-
-        tarea procesada3= gestor.procesarSiguienteTarea();
-        if(procesada3 != null){
-            System.out.println("Procesada:" + procesada3.getDescripcion());
-        }
-
-         System.out.println("Registro de trazabilidad");
+        System.out.println("No quedan más tareas por procesar.");
+        System.out.println("Registro de trazabilidad:");
         gestor.mostrarTrazabilidad();
+
+        // 🔹 Consulta de estado por teclado
+        Scanner sc = new Scanner(System.in);
+        System.out.println("\nConsulta de estado de tareas");
+        System.out.print("Ingresa el ID de la tarea: ");
+        String id = sc.nextLine(); // Lee el ID que escribe el usuario
+
+        // Llamar al método de búsqueda
+        String estado = gestor.consultarEstadoTarea(id);
+        System.out.println("Resultado: " + estado);
+
+        sc.close(); 
     }
 }
+
 
     
 
