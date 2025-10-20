@@ -5,19 +5,19 @@ public class tarea {
     private int prioridad;
     private long tiempoLlegada;
 
-    public tarea(String id, String descripcion, int prioridad, long tiempoLlegada ){
+    public tarea(String id, String descripcion, int prioridad, long tiempoLlegada) {
 
-    this.id = id;
-    this.descripcion = descripcion;
-    this.prioridad = prioridad;
-    this.tiempoLlegada= tiempoLlegada;
+        this.id = id;
+        this.descripcion = descripcion;
+        this.prioridad = prioridad;
+        this.tiempoLlegada = tiempoLlegada;
     }
 
     @Override
-    public String toString() { 
+    public String toString() {
 
-        return "Tarea" + 
-                "id ="+ id + 
+        return "Tarea" +
+                "id =" + id +
                 "Descripcion = " + descripcion +
                 "Prioridad =" + prioridad +
                 "Tiempo de llegada =" + tiempoLlegada +
@@ -25,38 +25,36 @@ public class tarea {
 
     }
 
-    public String getId(){
+    public String getId() {
         return id;
     }
 
-    public void setId(String id){
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getDescripcion(){
+    public String getDescripcion() {
         return descripcion;
     }
 
-    public void setDescripcion(String descripcion){
+    public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
-    public int getPrioridad(){
+    public int getPrioridad() {
         return prioridad;
     }
 
-    public void setPrioridad(int prioridad){
+    public void setPrioridad(int prioridad) {
         this.prioridad = prioridad;
     }
 
-    public long getTiempoLlegada(){
+    public long getTiempoLlegada() {
         return tiempoLlegada;
     }
 
-    public void setTiempoLlegada(long tiempollegada){
+    public void setTiempoLlegada(long tiempollegada) {
         this.tiempoLlegada = tiempollegada;
     }
-
-
 
 }

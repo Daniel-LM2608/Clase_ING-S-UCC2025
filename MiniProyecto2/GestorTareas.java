@@ -15,9 +15,9 @@ public class GestorTareas {
 
     // Constructor: inicializa las estructuras
     public GestorTareas() {
-        this.Prioritaria = new Stack<>();        // LIFO para prioridad 3
-        this.Espera = new LinkedList<>();        // FIFO para prioridad 1 y 2
-        this.Trazabilidad = new HashMap<>();     // idTarea -> estado / info
+        this.Prioritaria = new Stack<>(); // LIFO para prioridad 3
+        this.Espera = new LinkedList<>(); // FIFO para prioridad 1 y 2
+        this.Trazabilidad = new HashMap<>(); // idTarea -> estado / info
     }
 
     // Agregar tarea según prioridad
@@ -45,10 +45,9 @@ public class GestorTareas {
 
         // Registrar la tarea procesada en el mapa de trazabilidad
         Trazabilidad.put(
-            tareaProcesada.getId(),
-            "Completada - Prioridad: " + tareaProcesada.getPrioridad() +
-            " - Tiempo de llegada: " + fechaFormateada
-        );
+                tareaProcesada.getId(),
+                "Completada - Prioridad: " + tareaProcesada.getPrioridad() +
+                        " - Tiempo de llegada: " + fechaFormateada);
 
         return tareaProcesada;
     }
@@ -68,35 +67,26 @@ public class GestorTareas {
     // Consultar el estado de una tarea según su ID
     public String consultarEstadoTarea(String idTarea) {
 
-        // 1️⃣ Buscar en el registro de completadas
+        //  Buscar en el registro de completadas
         if (Trazabilidad.containsKey(idTarea)) {
             return "Tarea completada";
         }
 
-        // 2️⃣ Buscar en la pila de prioridad (pendiente)
+        //  Buscar en la pila de prioridad (pendiente)
         for (tarea t : Prioritaria) {
             if (t.getId().equals(idTarea)) {
                 return "Tarea pendiente (alta prioridad)";
             }
         }
 
-        // 3️⃣ Buscar en la cola de espera
+        // Buscar en la cola de espera
         for (tarea t : Espera) {
             if (t.getId().equals(idTarea)) {
                 return "Tarea en espera";
             }
         }
 
-        // 4️⃣ Si no está en ninguna estructura
+        // Si no está en ninguna estructura
         return "ID no encontrado";
     }
 }
-
-
-        
-
-        
-
-
-
-
