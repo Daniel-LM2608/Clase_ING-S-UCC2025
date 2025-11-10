@@ -5,7 +5,10 @@ public class Debito extends Cuenta {
 
     @Override
      public void apertura(double apertura) {
+        montoActual = getMontoActual() + apertura;
+        setMontoActual(montoActual);
      }
+
 
      @Override
 

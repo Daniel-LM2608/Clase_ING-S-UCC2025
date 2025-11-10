@@ -34,8 +34,7 @@ public class Cuenta {
     }
 
     public void apertura(double apertura) {
-        this.apertura = apertura;
-        this.montoActual += apertura;
+       
     }
 
     public double consultarSaldo() {
