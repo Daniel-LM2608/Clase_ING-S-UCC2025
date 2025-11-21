@@ -4,20 +4,28 @@ public class Debito extends Cuenta {
     }
 
     @Override
-     public void apertura(double apertura) {
-        montoActual = getMontoActual() + apertura;
-        setMontoActual(montoActual);
-     }
+    public void apertura(double apertura) {
+        if (apertura > 0) {
+            montoActual += apertura;
+        }
+    }
 
-     public void retirar(double cantidad){
-        montoActual = getMontoActual() - cantidad;
-        setMontoActual(montoActual);
-     }
+    public void retirar(double cantidad) {
+        if (cantidad <= 0) {
+            System.out.println("Error: el monto a retirar debe ser mayor que 0.");
+            return;
+        }
 
+        if (cantidad > montoActual) {
+            System.out.println("Fondos insuficientes.");
+            return;
+        }
 
-     @Override
+        montoActual -= cantidad;
+    }
 
+    @Override
     public double consultarSaldo() {
-        return getMontoActual();
+        return montoActual;
     }
 }
