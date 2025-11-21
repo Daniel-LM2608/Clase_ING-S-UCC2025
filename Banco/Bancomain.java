@@ -8,7 +8,7 @@ public class Bancomain {
 
         Debito debito = new Debito(0, 0, 0);
         Ahorro ahorro = new Ahorro(0, 0, 0);
-        Credito credito = new Credito(0, -200, 0);
+        Credito credito = new Credito(0, 0, 0);
 
         System.out.println("Bienvenido a tu cuenta de credito ");
         System.out.println("Tu saldo actual es: "+credito.consultarSaldo());

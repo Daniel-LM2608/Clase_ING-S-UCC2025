@@ -13,6 +13,8 @@ public class Credito extends Cuenta {
 
     @Override
     public double consultarSaldo() {
+        double deuda = -200;
+        montoActual = getMontoActual() + deuda;
         return getMontoActual();
     }   
 
