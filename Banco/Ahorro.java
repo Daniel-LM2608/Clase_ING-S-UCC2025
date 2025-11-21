@@ -10,7 +10,9 @@ public class Ahorro extends Cuenta {
     }
 
     public void invertir(double cantidad){
-        
+        montoActual = getMontoActual() + cantidad;
+        montoActual +=  getMontoActual() * interes;
+        setMontoActual(montoActual);
     }
 
     @Override

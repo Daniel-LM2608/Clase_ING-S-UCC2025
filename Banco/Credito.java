@@ -5,6 +5,9 @@ public class Credito extends Cuenta {
     }
 
     public void sumarInteres(double cantidad){
+        montoActual = getMontoActual() - cantidad;
+        montoActual +=  getMontoActual() * interes;
+        setMontoActual(montoActual);
         
     }
 
