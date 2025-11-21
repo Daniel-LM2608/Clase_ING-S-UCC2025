@@ -1,22 +1,26 @@
 public class Debito extends Cuenta {
 
-    public Debito(int id, double apertura, double montoActual, double cantidad) {
-        super(id, apertura, montoActual, cantidad);
+    public Debito(int id, double apertura) {
+        super(id, apertura);
     }
 
     @Override
     public void apertura(double apertura) {
-        montoActual = getMontoActual() + apertura;
-        setMontoActual(montoActual);
+        montoActual += apertura;
     }
 
     public void retirar(double cantidad) {
-        montoActual = getMontoActual() - cantidad;
-        setMontoActual(montoActual);
+        montoActual -= cantidad;
     }
 
     @Override
     public double consultarSaldo() {
-        return getMontoActual();
+        return montoActual;
+    }
+
+    @Override
+    public String toString() {
+        return "Cuenta Débito | ID: " + getId() + " | Saldo: " + montoActual;
     }
 }
+

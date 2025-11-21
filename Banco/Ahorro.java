@@ -2,24 +2,28 @@ public class Ahorro extends Cuenta {
 
     private double interes = 0.1;
 
-    public Ahorro(int id, double apertura, double montoActual, double cantidad) {
-        super(id, apertura, montoActual, cantidad);
+    public Ahorro(int id, double apertura) {
+        super(id, apertura);
     }
 
     @Override
     public void apertura(double apertura) {
-        montoActual = getMontoActual() + apertura;
-        setMontoActual(montoActual);
+        montoActual += apertura;
     }
 
     public void invertir(double cantidad) {
-        montoActual = getMontoActual() + cantidad;
-        montoActual += getMontoActual() * interes;
-        setMontoActual(montoActual);
+        montoActual += cantidad;
+        montoActual += montoActual * interes;
     }
 
     @Override
     public double consultarSaldo() {
-        return getMontoActual();
+        return montoActual;
+    }
+
+    @Override
+    public String toString() {
+        return "Cuenta Ahorro | ID: " + getId() + " | Saldo: " + montoActual;
     }
 }
+

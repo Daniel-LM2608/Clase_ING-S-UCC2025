@@ -1,34 +1,19 @@
-public class Cuenta {
+public abstract class Cuenta {
 
-    private int id;               // ← Nuevo ID de la cuenta
-    private double apertura;
-    protected double montoActual = 0;
-    protected double cantidad;
+    private int id;
+    protected double montoActual;
 
-    // Constructor ACTUALIZADO con ID
-    public Cuenta(int id, double apertura, double montoActual, double cantidad) {
+    public Cuenta(int id, double apertura) {
         this.id = id;
-        this.apertura = apertura;
-        this.montoActual = montoActual;
-        this.cantidad = cantidad;
+        this.montoActual = apertura;
     }
 
-    // Getter del ID
     public int getId() {
         return id;
     }
 
-    // Setter del ID (si llegara a hacer falta)
     public void setId(int id) {
         this.id = id;
-    }
-
-    public double getApertura() {
-        return apertura;
-    }
-
-    public void setApertura(double apertura) {
-        this.apertura = apertura;
     }
 
     public double getMontoActual() {
@@ -39,19 +24,10 @@ public class Cuenta {
         this.montoActual = montoActual;
     }
 
-    public double getCantidad() {
-        return cantidad;
-    }
+    public abstract void apertura(double monto);
 
-    public void setCantidad(double cantidad) {
-        this.cantidad = cantidad;
-    }
+    public abstract double consultarSaldo();
 
-    public void apertura(double apertura) {
-        // Se sobreescribe en clases hijas
-    }
-
-    public double consultarSaldo() {
-        return montoActual;
-    }
+    @Override
+    public abstract String toString();
 }
