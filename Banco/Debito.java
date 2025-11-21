@@ -1,31 +1,22 @@
 public class Debito extends Cuenta {
-    public Debito(double apertura, double montoActual, double cantidad) {
-        super(apertura, montoActual, cantidad);
+
+    public Debito(int id, double apertura, double montoActual, double cantidad) {
+        super(id, apertura, montoActual, cantidad);
     }
 
     @Override
     public void apertura(double apertura) {
-        if (apertura > 0) {
-            montoActual += apertura;
-        }
+        montoActual = getMontoActual() + apertura;
+        setMontoActual(montoActual);
     }
 
     public void retirar(double cantidad) {
-        if (cantidad <= 0) {
-            System.out.println("Error: el monto a retirar debe ser mayor que 0.");
-            return;
-        }
-
-        if (cantidad > montoActual) {
-            System.out.println("Fondos insuficientes.");
-            return;
-        }
-
-        montoActual -= cantidad;
+        montoActual = getMontoActual() - cantidad;
+        setMontoActual(montoActual);
     }
 
     @Override
     public double consultarSaldo() {
-        return montoActual;
+        return getMontoActual();
     }
 }
