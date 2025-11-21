@@ -9,6 +9,11 @@ public class Debito extends Cuenta {
         setMontoActual(montoActual);
      }
 
+     public void retirar(double cantidad){
+        montoActual = getMontoActual() - cantidad;
+        setMontoActual(montoActual);
+     }
+
 
      @Override
 
