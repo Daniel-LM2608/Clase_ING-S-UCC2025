@@ -15,6 +15,23 @@ public class Transaccion {
         this.fecha = LocalDateTime.now();
     }
 
+    // ⭐ GETTERS NECESARIOS PARA QUE EL GESTOR FUNCIONE
+    public int getIdCuenta() {
+        return idCuenta;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public double getMonto() {
+        return monto;
+    }
+
+    public LocalDateTime getFecha() {
+        return fecha;
+    }
+
     @Override
     public String toString() {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");

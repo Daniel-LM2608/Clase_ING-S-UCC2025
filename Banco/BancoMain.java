@@ -24,20 +24,22 @@ public class BancoMain {
             System.out.println("11. Listar cuentas");
             System.out.println("12. Consultar saldo");
             System.out.println("13. Ver transacciones");
+            System.out.println("14. Ver transacciones de cuenta");
+            
 
             // ORDENAMIENTOS / REPORTES
-            System.out.println("14. Ordenar cuentas por saldo (Merge Sort)");
-            System.out.println("15. Ordenar cuentas por ID (Quick Sort)");
-            System.out.println("16. Buscar cuenta por ID (Búsqueda Binaria)");
-            System.out.println("17. Reporte de cuentas ordenadas por saldo");
+            System.out.println("15. Ordenar cuentas por saldo (Merge Sort)");
+            System.out.println("16. Ordenar cuentas por ID (Quick Sort)");
+            System.out.println("17. Buscar cuenta por ID (Búsqueda Binaria)");
+            System.out.println("18. Reporte de cuentas ordenadas por saldo");
 
             // BST (Árbol binario)
-            System.out.println("18. Buscar cuenta en Árbol (BST)");
-            System.out.println("19. Mostrar cuentas InOrden (BST)");
-            System.out.println("20. Mostrar cuentas PreOrden (BST)");
-            System.out.println("21. Mostrar cuentas PostOrden (BST)");
+            System.out.println("19. Buscar cuenta en Árbol (BST)");
+            System.out.println("20. Mostrar cuentas InOrden (BST)");
+            System.out.println("21. Mostrar cuentas PreOrden (BST)");
+            System.out.println("22. Mostrar cuentas PostOrden (BST)");
 
-            System.out.println("22. Salir");
+            System.out.println("23. Salir");
 
             System.out.print("Seleccione una opción: ");
             opcion = sc.nextInt();
@@ -83,18 +85,22 @@ public class BancoMain {
                 case 13:
                     gestor.verTransacciones();
                     break;
-
+                    
                 case 14:
+                    gestor.verTransaccionesPorCuenta();
+                    break;
+
+                case 15:
                     gestor.ordenarCuentasPorSaldo();
                     System.out.println("✔ Cuentas ordenadas por saldo correctamente.");
                     break;
 
-                case 15:
+                case 16:
                     gestor.ordenarCuentasPorId();
                     System.out.println("✔ Cuentas ordenadas por ID correctamente.");
                     break;
 
-                case 16:
+                case 17:
                     System.out.print("Ingrese el ID de la cuenta a buscar (búsqueda binaria): ");
                     int idBuscar = sc.nextInt();
 
@@ -108,12 +114,12 @@ public class BancoMain {
                     }
                     break;
 
-                case 17:
+                case 18:
                     gestor.reporteCuentasOrdenadas();
                     break;
 
                 // === BST options ===
-                case 18:
+                case 19:
                     System.out.print("Ingrese el ID a buscar en el Árbol (BST): ");
                     int idBST = sc.nextInt();
                     Cuenta resultado = gestor.buscarEnBST(idBST);
@@ -126,19 +132,19 @@ public class BancoMain {
                     }
                     break;
 
-                case 19:
+                case 20:
                     gestor.imprimirInOrden();
                     break;
 
-                case 20:
+                case 21:
                     gestor.imprimirPreOrden();
                     break;
 
-                case 21:
+                case 22:
                     gestor.imprimirPostOrden();
                     break;
 
-                case 22:
+                case 23:
                     System.out.println("Saliendo del sistema...");
                     break;
 
@@ -147,7 +153,7 @@ public class BancoMain {
                     break;
             }
 
-        } while (opcion != 22);
+        } while (opcion != 23);
 
         sc.close();
     }

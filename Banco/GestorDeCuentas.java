@@ -555,4 +555,26 @@ public class GestorDeCuentas {
         }
     }
 
+    public void verTransaccionesPorCuenta() {
+        System.out.print("Ingrese el ID de la cuenta: ");
+        int id = sc.nextInt();
+
+        boolean hay = false;
+
+        System.out.println("\n=== TRANSACCIONES DE LA CUENTA " + id + " ===");
+
+        for (Transaccion t : transacciones) {
+            if (t.getIdCuenta() == id) {
+                System.out.println(t);
+                hay = true;
+            }
+        }
+
+        if (!hay) {
+            System.out.println("No hay transacciones registradas para esta cuenta.");
+        }
+
+        System.out.println("===========================================\n");
+    }
+
 }
