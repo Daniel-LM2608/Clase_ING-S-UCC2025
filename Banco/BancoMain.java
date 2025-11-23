@@ -1,14 +1,11 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BancoMain {
-
     public static void main(String[] args) {
-
         GestorDeCuentas gestor = new GestorDeCuentas();
         Scanner sc = new Scanner(System.in);
-
         int opcion;
-
         do {
             System.out.println("\n===== BANCO – MENÚ PRINCIPAL =====");
             System.out.println("1. Crear cuenta");
@@ -25,27 +22,23 @@ public class BancoMain {
             System.out.println("12. Consultar saldo");
             System.out.println("13. Ver transacciones");
             System.out.println("14. Ver transacciones de cuenta");
-            
-
-            // ORDENAMIENTOS / REPORTES
-            System.out.println("15. Ordenar cuentas por saldo (Merge Sort)");
-            System.out.println("16. Ordenar cuentas por ID (Quick Sort)");
+            System.out.println("15. Obtener cuentas ordenadas por saldo (Merge Sort)");
+            System.out.println("16. Obtener cuentas ordenadas por ID (Quick Sort)");
             System.out.println("17. Buscar cuenta por ID (Búsqueda Binaria)");
             System.out.println("18. Reporte de cuentas ordenadas por saldo");
-
-            // BST (Árbol binario)
             System.out.println("19. Buscar cuenta en Árbol (BST)");
             System.out.println("20. Mostrar cuentas InOrden (BST)");
             System.out.println("21. Mostrar cuentas PreOrden (BST)");
             System.out.println("22. Mostrar cuentas PostOrden (BST)");
-
             System.out.println("23. Salir");
-
             System.out.print("Seleccione una opción: ");
-            opcion = sc.nextInt();
+            try {
+                opcion = Integer.parseInt(sc.nextLine().trim());
+            } catch (NumberFormatException e) {
+                opcion = -1;
+            }
 
             switch (opcion) {
-
                 case 1:
                     gestor.crearCuenta();
                     break;
@@ -85,77 +78,70 @@ public class BancoMain {
                 case 13:
                     gestor.verTransacciones();
                     break;
-                    
                 case 14:
                     gestor.verTransaccionesPorCuenta();
                     break;
-
                 case 15:
-                    gestor.ordenarCuentasPorSaldo();
-                    System.out.println("✔ Cuentas ordenadas por saldo correctamente.");
+                    ArrayList<Cuenta> porSaldo = gestor.obtenerCuentasOrdenadasPorSaldo();
+                    System.out.println("Cuentas ordenadas por saldo (Merge Sort):");
+                    for (Cuenta c : porSaldo)
+                        System.out.println(c);
                     break;
-
                 case 16:
-                    gestor.ordenarCuentasPorId();
-                    System.out.println("✔ Cuentas ordenadas por ID correctamente.");
+                    ArrayList<Cuenta> porId = gestor.obtenerCuentasOrdenadasPorId();
+                    System.out.println("Cuentas ordenadas por ID (Quick Sort):");
+                    for (Cuenta c : porId)
+                        System.out.println(c);
                     break;
-
                 case 17:
                     System.out.print("Ingrese el ID de la cuenta a buscar (búsqueda binaria): ");
-                    int idBuscar = sc.nextInt();
-
-                    Cuenta encontradaBin = gestor.buscarCuentaBinaria(idBuscar);
-
-                    if (encontradaBin != null) {
-                        System.out.println("✔ Cuenta encontrada:");
-                        System.out.println(encontradaBin);
-                    } else {
-                        System.out.println("✘ La cuenta no existe.");
+                    try {
+                        int idBuscar = Integer.parseInt(sc.nextLine().trim());
+                        Cuenta encontradaBin = gestor.buscarCuentaBinaria(idBuscar);
+                        if (encontradaBin != null) {
+                            System.out.println("✔ Cuenta encontrada:");
+                            System.out.println(encontradaBin);
+                        } else
+                            System.out.println("✘ La cuenta no existe.");
+                    } catch (NumberFormatException e) {
+                        System.out.println("Entrada inválida.");
                     }
                     break;
-
                 case 18:
                     gestor.reporteCuentasOrdenadas();
                     break;
-
-                // === BST options ===
                 case 19:
-                    System.out.print("Ingrese el ID a buscar en el Árbol (BST): ");
-                    int idBST = sc.nextInt();
-                    Cuenta resultado = gestor.buscarEnBST(idBST);
-
-                    if (resultado != null) {
-                        System.out.println("✔ Cuenta encontrada en el Árbol:");
-                        System.out.println(resultado);
-                    } else {
-                        System.out.println("✘ No existe una cuenta con ese ID en el Árbol.");
+                    try {
+                        System.out.print("Ingrese el ID a buscar en el Árbol (BST): ");
+                        int idBST = Integer.parseInt(sc.nextLine().trim());
+                        Cuenta resultado = gestor.buscarEnBST(idBST);
+                        if (resultado != null) {
+                            System.out.println("✔ Cuenta encontrada en el Árbol:");
+                            System.out.println(resultado);
+                        } else
+                            System.out.println("✘ No existe una cuenta con ese ID en el Árbol.");
+                    } catch (NumberFormatException e) {
+                        System.out.println("Entrada inválida.");
                     }
                     break;
-
                 case 20:
                     gestor.imprimirInOrden();
                     break;
-
                 case 21:
                     gestor.imprimirPreOrden();
                     break;
-
                 case 22:
                     gestor.imprimirPostOrden();
                     break;
-
                 case 23:
                     System.out.println("Saliendo del sistema...");
                     break;
-
                 default:
                     System.out.println("Opción inválida.");
                     break;
             }
 
         } while (opcion != 23);
-
         sc.close();
     }
 }
-

@@ -1,5 +1,4 @@
 public abstract class Cuenta {
-
     private int id;
     protected double montoActual;
 
@@ -24,8 +23,10 @@ public abstract class Cuenta {
         this.montoActual = montoActual;
     }
 
+    // Método para procesar una "apertura" o ingreso de dinero
     public abstract void apertura(double monto);
 
+    // Devuelve el saldo (para crédito puede ser deuda negativa)
     public abstract double consultarSaldo();
 
     @Override

@@ -1,6 +1,5 @@
 public class Ahorro extends Cuenta {
-
-    private double interes = 0.1;
+    private double interes = 0.10; // 10% ejemplo
 
     public Ahorro(int id, double apertura) {
         super(id, apertura);
@@ -8,11 +7,15 @@ public class Ahorro extends Cuenta {
 
     @Override
     public void apertura(double apertura) {
+        // Aumenta el saldo
         montoActual += apertura;
     }
 
     public void invertir(double cantidad) {
+        if (cantidad <= 0)
+            return;
         montoActual += cantidad;
+        // aplicar interés sobre el total (ejemplo simple)
         montoActual += montoActual * interes;
     }
 
@@ -26,4 +29,3 @@ public class Ahorro extends Cuenta {
         return "Cuenta Ahorro | ID: " + getId() + " | Saldo: " + montoActual;
     }
 }
-

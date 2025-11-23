@@ -2,7 +2,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Transaccion {
-
     private int idCuenta;
     private String tipo;
     private double monto;
@@ -15,7 +14,6 @@ public class Transaccion {
         this.fecha = LocalDateTime.now();
     }
 
-    // ⭐ GETTERS NECESARIOS PARA QUE EL GESTOR FUNCIONE
     public int getIdCuenta() {
         return idCuenta;
     }
@@ -35,9 +33,7 @@ public class Transaccion {
     @Override
     public String toString() {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        return "Transacción | Cuenta: " + idCuenta +
-                " | Tipo: " + tipo +
-                " | Monto: " + monto +
-                " | Fecha: " + fecha.format(formato);
+        return "Transacción | Cuenta: " + idCuenta + " | Tipo: " + tipo + " | Monto: " + monto + " | Fecha: "
+                + fecha.format(formato);
     }
 }

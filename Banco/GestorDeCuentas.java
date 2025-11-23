@@ -1,11 +1,12 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class GestorDeCuentas {
-
+    // BST interno por ID
     private NodoBST raiz;
 
-    // Clase interna del nodo del árbol
     class NodoBST {
         Cuenta cuenta;
         NodoBST izquierda;
@@ -18,14 +19,20 @@ public class GestorDeCuentas {
 
     private ArrayList<Cuenta> cuentas;
     private ArrayList<Transaccion> transacciones;
+    // Cola para demostrar uso de estructuras auxiliares (procesamiento diferido de
+    // transacciones)
+    private Queue<Transaccion> colaTransacciones;
     private Scanner sc;
 
     public GestorDeCuentas() {
         cuentas = new ArrayList<>();
         transacciones = new ArrayList<>();
+        colaTransacciones = new LinkedList<>();
         sc = new Scanner(System.in);
+        raiz = null;
     }
 
+    // ----------------------- MÉTODOS AUXILIARES -----------------------
     public Cuenta buscarCuenta(int id) {
         for (Cuenta c : cuentas) {
             if (c.getId() == id)
@@ -34,191 +41,254 @@ public class GestorDeCuentas {
         return null;
     }
 
+    private boolean idExiste(int id) {
+        return buscarCuenta(id) != null;
+    }
+
+    // ----------------------- OPERACIONES BÁSICAS -----------------------
     public void crearCuenta() {
-        System.out.println("Seleccione tipo de cuenta:");
-        System.out.println("1. Ahorro");
-        System.out.println("2. Débito");
-        System.out.println("3. Crédito");
-        System.out.print("Opción: ");
-        int opc = sc.nextInt();
+        try {
+            System.out.println("Seleccione tipo de cuenta:");
+            System.out.println("1. Ahorro");
+            System.out.println("2. Débito");
+            System.out.println("3. Crédito");
+            System.out.print("Opción: ");
+            int opc = Integer.parseInt(sc.nextLine().trim());
 
-        System.out.print("ID de la cuenta: ");
-        int id = sc.nextInt();
+            System.out.print("ID de la cuenta: ");
+            int id = Integer.parseInt(sc.nextLine().trim());
 
-        System.out.print("Monto de apertura (>=0): ");
-        double apertura = sc.nextDouble();
-
-        Cuenta nueva = null;
-
-        switch (opc) {
-            case 1:
-                nueva = new Ahorro(id, apertura);
-                break;
-            case 2:
-                nueva = new Debito(id, apertura);
-                break;
-            case 3:
-                nueva = new Credito(id, apertura);
-                break;
-            default:
-                System.out.println("Opción inválida.");
+            if (idExiste(id)) {
+                System.out.println("Ese ID ya existe. Cancelando creación.");
                 return;
-        }
+            }
 
-        cuentas.add(nueva);
-        raiz = insertarBST(raiz, nueva);
-        transacciones.add(new Transaccion(id, "Apertura", apertura));
-        System.out.println("Cuenta creada exitosamente.");
+            System.out.print("Monto de apertura (>=0): ");
+            double apertura = Double.parseDouble(sc.nextLine().trim());
+            if (apertura < 0) {
+                System.out.println("Monto inválido.");
+                return;
+            }
+
+            Cuenta nueva = null;
+            switch (opc) {
+                case 1:
+                    nueva = new Ahorro(id, apertura);
+                    break;
+                case 2:
+                    nueva = new Debito(id, apertura);
+                    break;
+                case 3:
+                    // Para crédito iniciamos sin deuda
+                    nueva = new Credito(id, 0);
+                    break;
+                default:
+                    System.out.println("Opción inválida.");
+                    return;
+            }
+
+            cuentas.add(nueva);
+            raiz = insertarBST(raiz, nueva);
+
+            Transaccion transApertura = new Transaccion(id, "Apertura", apertura);
+            transacciones.add(transApertura);
+            colaTransacciones.add(transApertura);
+            procesarColaTransacciones();
+
+            System.out.println("Cuenta creada exitosamente.");
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada inválida. Operación cancelada.");
+        }
     }
 
     public void depositar() {
-        System.out.print("ID de la cuenta: ");
-        int id = sc.nextInt();
-        System.out.print("Monto a depositar: ");
-        double monto = sc.nextDouble();
-
-        Cuenta c = buscarCuenta(id);
-        if (c == null) {
-            System.out.println("Cuenta no encontrada.");
-            return;
+        try {
+            System.out.print("ID de la cuenta: ");
+            int id = Integer.parseInt(sc.nextLine().trim());
+            System.out.print("Monto a depositar: ");
+            double monto = Double.parseDouble(sc.nextLine().trim());
+            Cuenta c = buscarCuenta(id);
+            if (c == null) {
+                System.out.println("Cuenta no encontrada.");
+                return;
+            }
+            if (monto <= 0) {
+                System.out.println("Monto inválido.");
+                return;
+            }
+            c.apertura(monto);
+            Transaccion trans = new Transaccion(id, "Depósito", monto);
+            transacciones.add(trans);
+            colaTransacciones.add(trans);
+            procesarColaTransacciones();
+            System.out.println("Depósito exitoso.");
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada inválida.");
         }
-        if (monto <= 0) {
-            System.out.println("Monto inválido.");
-            return;
-        }
-
-        c.apertura(monto);
-        transacciones.add(new Transaccion(id, "Depósito", monto));
-        System.out.println("Depósito exitoso.");
     }
 
     public void retirar() {
-        System.out.print("ID de la cuenta: ");
-        int id = sc.nextInt();
-        System.out.print("Monto a retirar: ");
-        double monto = sc.nextDouble();
-
-        Cuenta c = buscarCuenta(id);
-        if (c == null || !(c instanceof Debito)) {
-            System.out.println("Solo cuentas débito pueden retirar.");
-            return;
+        try {
+            System.out.print("ID de la cuenta: ");
+            int id = Integer.parseInt(sc.nextLine().trim());
+            System.out.print("Monto a retirar: ");
+            double monto = Double.parseDouble(sc.nextLine().trim());
+            Cuenta c = buscarCuenta(id);
+            if (c == null || !(c instanceof Debito)) {
+                System.out.println("Solo cuentas débito pueden retirar.");
+                return;
+            }
+            if (monto <= 0) {
+                System.out.println("Monto inválido.");
+                return;
+            }
+            if (!((Debito) c).retirar(monto)) {
+                System.out.println("Saldo insuficiente.");
+                return;
+            }
+            Transaccion trans = new Transaccion(id, "Retiro", monto);
+            transacciones.add(trans);
+            colaTransacciones.add(trans);
+            procesarColaTransacciones();
+            System.out.println("Retiro exitoso.");
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada inválida.");
         }
-        if (monto <= 0 || c.consultarSaldo() < monto) {
-            System.out.println("Monto inválido o saldo insuficiente.");
-            return;
-        }
-
-        ((Debito) c).retirar(monto);
-        transacciones.add(new Transaccion(id, "Retiro", monto));
-        System.out.println("Retiro exitoso.");
     }
 
     public void invertirAhorro() {
-        System.out.print("ID de la cuenta: ");
-        int id = sc.nextInt();
-        System.out.print("Monto a invertir: ");
-        double monto = sc.nextDouble();
-
-        Cuenta c = buscarCuenta(id);
-        if (c == null || !(c instanceof Ahorro)) {
-            System.out.println("Cuenta de ahorro no encontrada.");
-            return;
+        try {
+            System.out.print("ID de la cuenta: ");
+            int id = Integer.parseInt(sc.nextLine().trim());
+            System.out.print("Monto a invertir: ");
+            double monto = Double.parseDouble(sc.nextLine().trim());
+            Cuenta c = buscarCuenta(id);
+            if (c == null || !(c instanceof Ahorro)) {
+                System.out.println("Cuenta de ahorro no encontrada.");
+                return;
+            }
+            if (monto <= 0) {
+                System.out.println("Monto inválido.");
+                return;
+            }
+            ((Ahorro) c).invertir(monto);
+            Transaccion trans = new Transaccion(id, "Inversión", monto);
+            transacciones.add(trans);
+            colaTransacciones.add(trans);
+            procesarColaTransacciones();
+            System.out.println("Inversión realizada exitosamente.");
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada inválida.");
         }
-        if (monto <= 0) {
-            System.out.println("Monto inválido.");
-            return;
-        }
-
-        ((Ahorro) c).invertir(monto);
-        transacciones.add(new Transaccion(id, "Inversión", monto));
-        System.out.println("Inversión realizada exitosamente.");
     }
 
     public void usarCredito() {
-        System.out.print("ID de la cuenta: ");
-        int id = sc.nextInt();
-        System.out.print("Monto a usar de crédito: ");
-        double monto = sc.nextDouble();
-
-        Cuenta c = buscarCuenta(id);
-        if (c == null || !(c instanceof Credito)) {
-            System.out.println("Cuenta de crédito no encontrada.");
-            return;
+        try {
+            System.out.print("ID de la cuenta: ");
+            int id = Integer.parseInt(sc.nextLine().trim());
+            System.out.print("Monto a usar de crédito: ");
+            double monto = Double.parseDouble(sc.nextLine().trim());
+            Cuenta c = buscarCuenta(id);
+            if (c == null || !(c instanceof Credito)) {
+                System.out.println("Cuenta de crédito no encontrada.");
+                return;
+            }
+            if (monto <= 0) {
+                System.out.println("Monto inválido.");
+                return;
+            }
+            ((Credito) c).usarCredito(monto);
+            Transaccion trans = new Transaccion(id, "Uso de crédito", monto);
+            transacciones.add(trans);
+            colaTransacciones.add(trans);
+            procesarColaTransacciones();
+            System.out.println("Crédito utilizado exitosamente.");
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada inválida.");
         }
-        if (monto <= 0) {
-            System.out.println("Monto inválido.");
-            return;
-        }
-
-        ((Credito) c).usarCredito(monto);
-        transacciones.add(new Transaccion(id, "Uso de crédito", monto));
-        System.out.println("Crédito utilizado exitosamente.");
     }
 
     public void pagarCredito() {
-        System.out.print("ID de la cuenta: ");
-        int id = sc.nextInt();
-        System.out.print("Monto a pagar: ");
-        double monto = sc.nextDouble();
-
-        Cuenta c = buscarCuenta(id);
-        if (c == null || !(c instanceof Credito)) {
-            System.out.println("Cuenta de crédito no encontrada.");
-            return;
+        try {
+            System.out.print("ID de la cuenta: ");
+            int id = Integer.parseInt(sc.nextLine().trim());
+            System.out.print("Monto a pagar: ");
+            double monto = Double.parseDouble(sc.nextLine().trim());
+            Cuenta c = buscarCuenta(id);
+            if (c == null || !(c instanceof Credito)) {
+                System.out.println("Cuenta de crédito no encontrada.");
+                return;
+            }
+            if (monto <= 0) {
+                System.out.println("Monto inválido.");
+                return;
+            }
+            ((Credito) c).pagar(monto);
+            Transaccion trans = new Transaccion(id, "Pago de crédito", monto);
+            transacciones.add(trans);
+            colaTransacciones.add(trans);
+            procesarColaTransacciones();
+            System.out.println("Pago de crédito exitoso.");
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada inválida.");
         }
-        if (monto <= 0) {
-            System.out.println("Monto inválido.");
-            return;
-        }
-
-        ((Credito) c).pagar(monto);
-        transacciones.add(new Transaccion(id, "Pago de crédito", monto));
-        System.out.println("Pago de crédito exitoso.");
     }
 
     public void aplicarInteresCredito() {
-        System.out.print("ID de la cuenta de crédito: ");
-        int id = sc.nextInt();
-
-        Cuenta c = buscarCuenta(id);
-        if (c == null || !(c instanceof Credito)) {
-            System.out.println("Cuenta de crédito no encontrada.");
-            return;
+        try {
+            System.out.print("ID de la cuenta de crédito: ");
+            int id = Integer.parseInt(sc.nextLine().trim());
+            Cuenta c = buscarCuenta(id);
+            if (c == null || !(c instanceof Credito)) {
+                System.out.println("Cuenta de crédito no encontrada.");
+                return;
+            }
+            ((Credito) c).aplicarInteres();
+            Transaccion trans = new Transaccion(id, "Aplicar interés", 0);
+            transacciones.add(trans);
+            colaTransacciones.add(trans);
+            procesarColaTransacciones();
+            System.out.println("Interés aplicado correctamente.");
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada inválida.");
         }
-
-        ((Credito) c).aplicarInteres();
-        transacciones.add(new Transaccion(id, "Aplicar interés", 0));
-        System.out.println("Interés aplicado correctamente.");
     }
 
     public void transferir() {
-        System.out.print("ID cuenta origen (débito): ");
-        int idOrigen = sc.nextInt();
-        System.out.print("ID cuenta destino: ");
-        int idDestino = sc.nextInt();
-        System.out.print("Monto a transferir: ");
-        double monto = sc.nextDouble();
-
-        Cuenta origen = buscarCuenta(idOrigen);
-        Cuenta destino = buscarCuenta(idDestino);
-
-        if (origen == null || destino == null) {
-            System.out.println("Alguna de las cuentas no existe.");
-            return;
+        try {
+            System.out.print("ID cuenta origen (débito): ");
+            int idOrigen = Integer.parseInt(sc.nextLine().trim());
+            System.out.print("ID cuenta destino: ");
+            int idDestino = Integer.parseInt(sc.nextLine().trim());
+            System.out.print("Monto a transferir: ");
+            double monto = Double.parseDouble(sc.nextLine().trim());
+            Cuenta origen = buscarCuenta(idOrigen);
+            Cuenta destino = buscarCuenta(idDestino);
+            if (origen == null || destino == null) {
+                System.out.println("Alguna de las cuentas no existe.");
+                return;
+            }
+            if (!(origen instanceof Debito)) {
+                System.out.println("Solo cuentas débito pueden transferir.");
+                return;
+            }
+            if (monto <= 0) {
+                System.out.println("Monto inválido.");
+                return;
+            }
+            if (!((Debito) origen).retirar(monto)) {
+                System.out.println("Saldo insuficiente.");
+                return;
+            }
+            destino.apertura(monto);
+            Transaccion trans = new Transaccion(idOrigen, "Transferencia a " + idDestino, monto);
+            transacciones.add(trans);
+            colaTransacciones.add(trans);
+            procesarColaTransacciones();
+            System.out.println("Transferencia realizada exitosamente.");
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada inválida.");
         }
-        if (!(origen instanceof Debito)) {
-            System.out.println("Solo cuentas débito pueden transferir.");
-            return;
-        }
-        if (monto <= 0 || origen.consultarSaldo() < monto) {
-            System.out.println("Monto inválido o saldo insuficiente.");
-            return;
-        }
-
-        ((Debito) origen).retirar(monto);
-        destino.apertura(monto);
-        transacciones.add(new Transaccion(idOrigen, "Transferencia a " + idDestino, monto));
-        System.out.println("Transferencia realizada exitosamente.");
     }
 
     public void listarCuentas() {
@@ -232,16 +302,18 @@ public class GestorDeCuentas {
     }
 
     public void consultarSaldo() {
-        System.out.print("ID de la cuenta: ");
-        int id = sc.nextInt();
-
-        Cuenta c = buscarCuenta(id);
-        if (c == null) {
-            System.out.println("Cuenta no encontrada.");
-            return;
+        try {
+            System.out.print("ID de la cuenta: ");
+            int id = Integer.parseInt(sc.nextLine().trim());
+            Cuenta c = buscarCuenta(id);
+            if (c == null) {
+                System.out.println("Cuenta no encontrada.");
+                return;
+            }
+            System.out.println("Saldo actual: " + c.consultarSaldo());
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada inválida.");
         }
-
-        System.out.println("Saldo actual: " + c.consultarSaldo());
     }
 
     public void verTransacciones() {
@@ -253,36 +325,51 @@ public class GestorDeCuentas {
             System.out.println(t);
         }
     }
-    // ===============================================================
-    // ========== ORDENAMIENTO DE CUENTAS POR SALDO (MERGE SORT) =====
-    // ===============================================================
 
-    public void ordenarCuentasPorSaldo() {
-        if (cuentas.size() <= 1)
-            return;
-        cuentas = mergeSortPorSaldo(cuentas);
+    public void verTransaccionesPorCuenta() {
+        try {
+            System.out.print("Ingrese el ID de la cuenta: ");
+            int id = Integer.parseInt(sc.nextLine().trim());
+            boolean hay = false;
+            System.out.println("\n=== TRANSACCIONES DE LA CUENTA " + id + " ===");
+            for (Transaccion t : transacciones) {
+                if (t.getIdCuenta() == id) {
+                    System.out.println(t);
+                    hay = true;
+                }
+            }
+            if (!hay) {
+                System.out.println("No hay transacciones registradas para esta cuenta.");
+            }
+            System.out.println("===========================================\n");
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada inválida.");
+        }
+    }
+
+    // ----------------------- ORDENAMIENTO (no modifican lista original)
+    // -----------------------
+    public ArrayList<Cuenta> obtenerCuentasOrdenadasPorSaldo() {
+        ArrayList<Cuenta> copia = new ArrayList<>(cuentas);
+        if (copia.size() <= 1)
+            return copia;
+        return mergeSortPorSaldo(copia);
     }
 
     private ArrayList<Cuenta> mergeSortPorSaldo(ArrayList<Cuenta> lista) {
         if (lista.size() <= 1)
             return lista;
-
         int mitad = lista.size() / 2;
-
         ArrayList<Cuenta> izquierda = new ArrayList<>(lista.subList(0, mitad));
         ArrayList<Cuenta> derecha = new ArrayList<>(lista.subList(mitad, lista.size()));
-
         izquierda = mergeSortPorSaldo(izquierda);
         derecha = mergeSortPorSaldo(derecha);
-
         return merge(izquierda, derecha);
     }
 
     private ArrayList<Cuenta> merge(ArrayList<Cuenta> izq, ArrayList<Cuenta> der) {
         ArrayList<Cuenta> resultado = new ArrayList<>();
-
         int i = 0, j = 0;
-
         while (i < izq.size() && j < der.size()) {
             if (izq.get(i).getMontoActual() <= der.get(j).getMontoActual()) {
                 resultado.add(izq.get(i));
@@ -292,34 +379,28 @@ public class GestorDeCuentas {
                 j++;
             }
         }
-
         while (i < izq.size()) {
             resultado.add(izq.get(i));
             i++;
         }
-
         while (j < der.size()) {
             resultado.add(der.get(j));
             j++;
         }
-
         return resultado;
     }
 
-    // ===============================================================
-    // ========== ORDENAMIENTO POR ID (QUICK SORT) ====================
-    // ===============================================================
-
-    public void ordenarCuentasPorId() {
-        if (cuentas.size() <= 1)
-            return;
-        quickSort(cuentas, 0, cuentas.size() - 1);
+    public ArrayList<Cuenta> obtenerCuentasOrdenadasPorId() {
+        ArrayList<Cuenta> copia = new ArrayList<>(cuentas);
+        if (copia.size() <= 1)
+            return copia;
+        quickSort(copia, 0, copia.size() - 1);
+        return copia;
     }
 
     private void quickSort(ArrayList<Cuenta> lista, int low, int high) {
         if (low < high) {
             int pi = partition(lista, low, high);
-
             quickSort(lista, low, pi - 1);
             quickSort(lista, pi + 1, high);
         }
@@ -328,7 +409,6 @@ public class GestorDeCuentas {
     private int partition(ArrayList<Cuenta> lista, int low, int high) {
         int pivot = lista.get(high).getId();
         int i = low - 1;
-
         for (int j = low; j < high; j++) {
             if (lista.get(j).getId() <= pivot) {
                 i++;
@@ -337,167 +417,160 @@ public class GestorDeCuentas {
                 lista.set(j, temp);
             }
         }
-
         Cuenta temp = lista.get(i + 1);
         lista.set(i + 1, lista.get(high));
         lista.set(high, temp);
-
         return i + 1;
     }
 
-    // ===============================================================
-    // ========== BÚSQUEDA BINARIA POR ID =============================
-    // ===============================================================
-
+    // ----------------------- BÚSQUEDA BINARIA (usa copia ordenada)
+    // -----------------------
     public Cuenta buscarCuentaBinaria(int id) {
-        ordenarCuentasPorId(); // debe estar ordenada para funcionar
-
+        ArrayList<Cuenta> ordenadas = obtenerCuentasOrdenadasPorId();
         int inicio = 0;
-        int fin = cuentas.size() - 1;
-
+        int fin = ordenadas.size() - 1;
         while (inicio <= fin) {
             int medio = (inicio + fin) / 2;
-            Cuenta cuenta = cuentas.get(medio);
-
-            if (cuenta.getId() == id) {
+            Cuenta cuenta = ordenadas.get(medio);
+            if (cuenta.getId() == id)
                 return cuenta;
-            } else if (cuenta.getId() < id) {
+            else if (cuenta.getId() < id)
                 inicio = medio + 1;
-            } else {
+            else
                 fin = medio - 1;
-            }
         }
-
         return null;
     }
 
-    // ===============================================================
-    // ========== REPORTE ORDENADO ===================================
-    // ===============================================================
-
+    // ----------------------- REPORTE ORDENADO -----------------------
     public void reporteCuentasOrdenadas() {
-        ordenarCuentasPorSaldo();
-
+        ArrayList<Cuenta> ordenadas = obtenerCuentasOrdenadasPorSaldo();
         System.out.println("\n=== REPORTE DE CUENTAS ORDENADAS POR SALDO ===");
-
-        for (Cuenta c : cuentas) {
+        for (Cuenta c : ordenadas) {
             System.out.println("ID: " + c.getId() + " | Saldo: " + c.getMontoActual());
         }
-
         System.out.println("==============================================\n");
     }
 
+    // ----------------------- ACTUALIZAR / ELIMINAR -----------------------
     public void actualizarCuenta() {
-        System.out.print("ID de la cuenta que desea actualizar: ");
-        int id = sc.nextInt();
-
-        Cuenta c = buscarCuenta(id);
-
-        if (c == null) {
-            System.out.println("Cuenta no encontrada.");
-            return;
-        }
-
-        System.out.println("\n¿Qué desea actualizar?");
-        System.out.println("1. Cambiar ID");
-        System.out.println("2. Cambiar tipo de cuenta");
-        System.out.print("Opción: ");
-        int opc = sc.nextInt();
-
-        switch (opc) {
-            case 1:
-                System.out.print("Nuevo ID: ");
-                int nuevoId = sc.nextInt();
-
-                // verificar ID repetido
-                if (buscarCuenta(nuevoId) != null) {
-                    System.out.println("Ese ID ya está en uso.");
-                    return;
-                }
-
-                c.setId(nuevoId);
-                System.out.println("ID actualizado correctamente.");
-                break;
-
-            case 2:
-                System.out.println("Seleccione nuevo tipo:");
-                System.out.println("1. Ahorro");
-                System.out.println("2. Débito");
-                System.out.println("3. Crédito");
-                System.out.print("Opción: ");
-                int nuevoTipo = sc.nextInt();
-
-                Cuenta nueva = null;
-
-                if (nuevoTipo == 1)
-                    nueva = new Ahorro(c.getId(), c.getMontoActual());
-                else if (nuevoTipo == 2)
-                    nueva = new Debito(c.getId(), c.getMontoActual());
-                else if (nuevoTipo == 3)
-                    nueva = new Credito(c.getId(), 0); // créditos no usan saldo
-                else {
+        try {
+            System.out.print("ID de la cuenta que desea actualizar: ");
+            int id = Integer.parseInt(sc.nextLine().trim());
+            Cuenta c = buscarCuenta(id);
+            if (c == null) {
+                System.out.println("Cuenta no encontrada.");
+                return;
+            }
+            System.out.println("\n¿Qué desea actualizar?");
+            System.out.println("1. Cambiar ID");
+            System.out.println("2. Cambiar tipo de cuenta");
+            System.out.print("Opción: ");
+            int opc = Integer.parseInt(sc.nextLine().trim());
+            switch (opc) {
+                case 1:
+                    System.out.print("Nuevo ID: ");
+                    int nuevoId = Integer.parseInt(sc.nextLine().trim());
+                    if (nuevoId == id) {
+                        System.out.println("El ID es igual al anterior. Nada que hacer.");
+                        return;
+                    }
+                    if (idExiste(nuevoId)) {
+                        System.out.println("Ese ID ya está en uso.");
+                        return;
+                    }
+                    // actualizar: quitar nodo viejo del BST, actualizar id y volver a insertar
+                    raiz = eliminarNodoBST(raiz, id);
+                    c.setId(nuevoId);
+                    raiz = insertarBST(raiz, c);
+                    System.out.println("ID actualizado correctamente.");
+                    break;
+                case 2:
+                    System.out.println("Seleccione nuevo tipo:");
+                    System.out.println("1. Ahorro");
+                    System.out.println("2. Débito");
+                    System.out.println("3. Crédito");
+                    System.out.print("Opción: ");
+                    int nuevoTipo = Integer.parseInt(sc.nextLine().trim());
+                    Cuenta nueva = null;
+                    double saldoActual = c.getMontoActual();
+                    int currentId = c.getId();
+                    if (nuevoTipo == 1)
+                        nueva = new Ahorro(currentId, saldoActual);
+                    else if (nuevoTipo == 2)
+                        nueva = new Debito(currentId, saldoActual);
+                    else if (nuevoTipo == 3) {
+                        // Convierte a crédito: comenzamos sin deuda (se puede ajustar según
+                        // requerimiento)
+                        nueva = new Credito(currentId, 0);
+                    } else {
+                        System.out.println("Opción inválida.");
+                        return;
+                    }
+                    // Reemplazar en la lista y en el BST
+                    int index = cuentas.indexOf(c);
+                    if (index >= 0) {
+                        cuentas.set(index, nueva);
+                        raiz = eliminarNodoBST(raiz, currentId);
+                        raiz = insertarBST(raiz, nueva);
+                        System.out.println("Tipo de cuenta actualizado correctamente.");
+                    } else {
+                        System.out.println("Error al actualizar: cuenta no encontrada en la lista.");
+                    }
+                    break;
+                default:
                     System.out.println("Opción inválida.");
-                    return;
-                }
-
-                // remplazar cuenta en la lista
-                cuentas.set(cuentas.indexOf(c), nueva);
-
-                System.out.println("Tipo de cuenta actualizado correctamente.");
-                break;
-
-            default:
-                System.out.println("Opción inválida.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada inválida.");
         }
     }
 
     public void eliminarCuenta() {
-        System.out.print("ID de la cuenta a eliminar: ");
-        int id = sc.nextInt();
-
-        Cuenta c = buscarCuenta(id);
-
-        if (c == null) {
-            System.out.println("Cuenta no encontrada.");
-            return;
-        }
-
-        // verificar que la cuenta está en cero
-        if (c instanceof Credito) {
-            if (c.getMontoActual() != 0) {
-                System.out.println("No se puede eliminar. La cuenta de crédito aún tiene deuda.");
+        try {
+            System.out.print("ID de la cuenta a eliminar: ");
+            int id = Integer.parseInt(sc.nextLine().trim());
+            Cuenta c = buscarCuenta(id);
+            if (c == null) {
+                System.out.println("Cuenta no encontrada.");
                 return;
             }
-        } else {
-            if (c.getMontoActual() != 0) {
-                System.out.println("No se puede eliminar. La cuenta tiene saldo disponible.");
-                return;
+            // verificar que la cuenta está en cero
+            if (c instanceof Credito) {
+                if (c.getMontoActual() < 0) {
+                    System.out.println("No se puede eliminar. La cuenta de crédito aún tiene deuda.");
+                    return;
+                }
+            } else {
+                if (c.getMontoActual() != 0) {
+                    System.out.println("No se puede eliminar. La cuenta tiene saldo disponible.");
+                    return;
+                }
             }
+            // eliminar de lista
+            cuentas.remove(c);
+            // eliminar del BST
+            raiz = eliminarNodoBST(raiz, id);
+            // eliminar transacciones asociadas
+            transacciones.removeIf(t -> t.getIdCuenta() == id);
+            System.out.println("Cuenta eliminada exitosamente.");
+        } catch (NumberFormatException e) {
+            System.out.println("Entrada inválida.");
         }
-
-        cuentas.remove(c);
-        System.out.println("Cuenta eliminada exitosamente.");
     }
 
-    // ===============================================================
-    // ========== ARBOL BINARIO DE BUSQUEDA (BST) ====================
-    // ===============================================================
-
-    // Inserción en árbol
+    // ----------------------- BST (inserción, búsqueda, eliminación, recorridos)
+    // -----------------------
     private NodoBST insertarBST(NodoBST nodo, Cuenta cuenta) {
         if (nodo == null)
             return new NodoBST(cuenta);
-
-        if (cuenta.getId() < nodo.cuenta.getId()) {
+        if (cuenta.getId() < nodo.cuenta.getId())
             nodo.izquierda = insertarBST(nodo.izquierda, cuenta);
-        } else if (cuenta.getId() > nodo.cuenta.getId()) {
+        else if (cuenta.getId() > nodo.cuenta.getId())
             nodo.derecha = insertarBST(nodo.derecha, cuenta);
-        }
-
         return nodo;
     }
 
-    // Búsqueda en BST
     public Cuenta buscarEnBST(int id) {
         return buscarBSTRec(raiz, id);
     }
@@ -505,17 +578,46 @@ public class GestorDeCuentas {
     private Cuenta buscarBSTRec(NodoBST nodo, int id) {
         if (nodo == null)
             return null;
-
         if (id == nodo.cuenta.getId())
             return nodo.cuenta;
-
         if (id < nodo.cuenta.getId())
             return buscarBSTRec(nodo.izquierda, id);
         else
             return buscarBSTRec(nodo.derecha, id);
     }
 
-    // Recorridos del árbol
+    // Eliminación estándar de un nodo por id
+    private NodoBST eliminarNodoBST(NodoBST nodo, int id) {
+        if (nodo == null)
+            return null;
+        if (id < nodo.cuenta.getId())
+            nodo.izquierda = eliminarNodoBST(nodo.izquierda, id);
+        else if (id > nodo.cuenta.getId())
+            nodo.derecha = eliminarNodoBST(nodo.derecha, id);
+        else {
+            // encontrado
+            if (nodo.izquierda == null)
+                return nodo.derecha;
+            else if (nodo.derecha == null)
+                return nodo.izquierda;
+            else {
+                // dos hijos: reemplazar por el sucesor mínimo
+                NodoBST sucesor = minValueNode(nodo.derecha);
+                nodo.cuenta = sucesor.cuenta;
+                nodo.derecha = eliminarNodoBST(nodo.derecha, sucesor.cuenta.getId());
+            }
+        }
+        return nodo;
+    }
+
+    private NodoBST minValueNode(NodoBST node) {
+        NodoBST current = node;
+        while (current.izquierda != null)
+            current = current.izquierda;
+        return current;
+    }
+
+    // Recorridos
     public void imprimirInOrden() {
         System.out.println("=== Recorrido InOrden ===");
         inOrden(raiz);
@@ -555,26 +657,15 @@ public class GestorDeCuentas {
         }
     }
 
-    public void verTransaccionesPorCuenta() {
-        System.out.print("Ingrese el ID de la cuenta: ");
-        int id = sc.nextInt();
-
-        boolean hay = false;
-
-        System.out.println("\n=== TRANSACCIONES DE LA CUENTA " + id + " ===");
-
-        for (Transaccion t : transacciones) {
-            if (t.getIdCuenta() == id) {
-                System.out.println(t);
-                hay = true;
-            }
+    // ----------------------- Cola de transacciones (demostración de cola/pila)
+    // -----------------------
+    private void procesarColaTransacciones() {
+        // en este ejemplo procesamos inmediatamente—solo para mostrar uso de Queue
+        while (!colaTransacciones.isEmpty()) {
+            Transaccion t = colaTransacciones.poll();
+            // ejemplo de uso: registrar en consola que fue procesada
+            System.out.println("Procesada: " + t);
+            // aquí podrías también escribir en un log o enviarla a una base de datos
         }
-
-        if (!hay) {
-            System.out.println("No hay transacciones registradas para esta cuenta.");
-        }
-
-        System.out.println("===========================================\n");
     }
-
 }

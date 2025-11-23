@@ -1,5 +1,4 @@
 public class Debito extends Cuenta {
-
     public Debito(int id, double apertura) {
         super(id, apertura);
     }
@@ -9,8 +8,13 @@ public class Debito extends Cuenta {
         montoActual += apertura;
     }
 
-    public void retirar(double cantidad) {
+    public boolean retirar(double cantidad) {
+        if (cantidad <= 0)
+            return false;
+        if (montoActual < cantidad)
+            return false;
         montoActual -= cantidad;
+        return true;
     }
 
     @Override
@@ -23,4 +27,3 @@ public class Debito extends Cuenta {
         return "Cuenta Débito | ID: " + getId() + " | Saldo: " + montoActual;
     }
 }
-
